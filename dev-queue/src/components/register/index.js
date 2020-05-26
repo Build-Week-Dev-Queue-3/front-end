@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Register.css';
 import { Form, FormGroup, Input, Label, Button, UncontrolledAlert } from 'reactstrap';
 import * as yup from 'yup';
@@ -40,16 +40,27 @@ export default function RegisterForm(props) {
         const element = event.target;
 
         if (element.getAttribute('type') === 'checkbox') {
-            if (element.checked) {
-                updateFormData(element.name, true);
-            } else {
+            if (formData[element.name]) {
                 updateFormData(element.name, false);
+            } else {
+                updateFormData(element.name, true);
             }
         } else {
             updateFormData(element.name, element.value);
         }
 
-        // If the form data is ok, enable the submit button, otherwise disable
+        yup.reach(registerFormSchema, element.name)
+            .validate(formData[element.name])
+            .then(valid => {
+                setErrors({...errors, [element.name]: ''});
+            })
+            .catch(err => {
+                setErrors({...errors, [element.name]: err.errors[0]});
+            });
+    
+    }
+
+    useEffect(() => {
         registerFormSchema.isValid(formData)
             .then((valid) => {
                 if (valid) {
@@ -58,8 +69,7 @@ export default function RegisterForm(props) {
                     setDisabled(true);
                 }
             });
-    
-    }
+    }, [formData]);
 
     function onSubmitHandler(event) {
         event.preventDefault();
@@ -91,7 +101,7 @@ export default function RegisterForm(props) {
             }
             <div className="row">
                 <div className="col-lg-6">
-                    <Form>
+                    <Form autocomplete="off">
                         <h2>New Account</h2>
                         <FormGroup>
                             <Label>Name:</Label>
