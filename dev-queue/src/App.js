@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link } from "react-router-dom";
-import * as yup from 'yup';
+import React from 'react';
+import { Switch, Route } from "react-router-dom";
 import './App.css';
 
 import Header from './components/header';
