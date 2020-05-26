@@ -2,15 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchData } from '../store/actions';
 
-export const handleChange = (e) => {
-    this.setState({
-        creds: {
-            ...this.state.creds,
-            [e.target.name]: e.target.value,
-        },
-    });
-};
-
 const Dashboard = (props) => {
     // console.log('props', props);
 
@@ -22,7 +13,7 @@ const Dashboard = (props) => {
             <h2>this is the dashboard as of now.</h2>
             {props.data &&
                 props.data.map((queue) => {
-                    // console.log(queue);
+                    console.log(queue);
                     return (
                         <div key={queue.id}>
                             <h3>{queue.subject}</h3>
