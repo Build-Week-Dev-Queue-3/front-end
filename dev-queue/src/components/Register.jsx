@@ -30,7 +30,6 @@ class Register extends React.Component {
             },
         });
     };
-    // newUser = this.state.creds;
     handleRegister = (e) => {
         e.preventDefault();
         Axios.post(

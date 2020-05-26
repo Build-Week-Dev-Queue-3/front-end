@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../utils/authenticAxios';
-import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 const AddTicket = (props) => {
+    const initialState = { subject: '', ticket_text: '' };
     console.log('AddTicket Props: ', props);
-    const [ticketData, setTicketData] = useState();
-    const [tickets, setTickets] = useState([]);
-    useEffect(() => {
-        authenticatedAxios()
-            .get('tickets')
-            .then((res) => {
-                console.log('tickets res', res);
-                setTickets(res.data.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    const [ticketData, setTicketData] = useState(initialState);
+
     const handleChange = (e) => {
         const newTicketData = {
             ...ticketData,
@@ -30,12 +20,13 @@ const AddTicket = (props) => {
             .post('tickets', ticketData)
             .then((res) => {
                 console.log(res);
+                setTicketData(initialState);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
-    console.log('tickets yoooo', tickets);
+    console.log(ticketData);
     return (
         <section>
             <form onSubmit={handleSubmit}>
@@ -46,7 +37,7 @@ const AddTicket = (props) => {
                         type="text"
                         name="subject"
                         onChange={handleChange}
-                        value={props.subject}
+                        value={ticketData.subject}
                     />
                 </label>
                 <label>
@@ -55,7 +46,7 @@ const AddTicket = (props) => {
                         type="text"
                         name="ticket_text"
                         onChange={handleChange}
-                        value={props.ticket_text}
+                        value={ticketData.ticket_text}
                     />
                 </label>
                 <button>Submit Ticket</button>
