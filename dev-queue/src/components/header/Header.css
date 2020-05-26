@@ -1,0 +1,22 @@
+.header {
+    height: 90px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+.header__logo {
+    background-image: url(./Logo.svg);
+    width: 106px;
+    height: 32px;
+    display: inline-block;
+    text-indent: -9999px;
+}
+
+.header__nav {
+    display: flex;
+}
+
+.header__nav-link {
+    margin-right: 3rem;
+}

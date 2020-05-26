@@ -1,9 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Switch, Route, Link } from "react-router-dom";
 import './App.css';
 
+import Header from './components/header';
+import RegisterForm from './components/register';
+
+
 function App() {
-    return null;
+    return (
+        <>
+            <Header />
+            <div className="container">
+                <Switch>
+
+                    // Dashboard
+                    <Route exact path="/">
+                        <h1>Dashboard</h1>
+                    </Route>
+                    
+                    // Login page
+                    <Route path="/login">
+                        Login
+                    </Route>
+
+                    // Register page
+                    <Route path="/register">
+                        <RegisterForm />
+                    </Route>
+
+                </Switch>
+            </div>
+        </>
+    );
 }
 
 export default App;
