@@ -3,6 +3,7 @@
     background-color: white;
     display: flex;
     align-items: center;
+    margin-bottom: 60px;
 }
 
 .header__logo {
