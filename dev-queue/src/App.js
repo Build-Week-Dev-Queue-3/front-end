@@ -5,6 +5,7 @@ import './App.css';
 
 import Header from './components/header';
 import RegisterForm from './components/register';
+import LoginForm from './components/login';
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
                 
                 // Login page
                 <Route path="/login">
-                    Login
+                    <LoginForm />
                 </Route>
 
                 // Register page

@@ -3,31 +3,23 @@ import { Link } from "react-router-dom";
 import * as yup from 'yup';
 import axios from 'axios';
 
-import './Register.css';
+import './Login.css';
 import { Form, FormGroup, Input, Label, Button, UncontrolledAlert } from 'reactstrap';
-import registerFormSchema from "./registerFormSchema";
+import loginFormSchema from "./loginFormSchema";
 
 
-export default function RegisterForm(props) {
+export default function LoginForm(props) {
     const initialErrors = {
-        name: '',
         email: '',
-        password: '',
-        cohort: '',
-        helper: '',
-        student: ''
+        password: ''
     };
 
     const initialFormData = {
-        name: '',
         email: '',
-        password: '',
-        cohort: '',
-        helper: false,
-        student: false,
+        password: ''
     };
 
-    const REGISTER_URL = 'https://bwdevdesk3.herokuapp.com/auth/register';
+    const LOGIN_URL = 'https://bwdevdesk3.herokuapp.com/auth/login';
 
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
@@ -41,17 +33,10 @@ export default function RegisterForm(props) {
 
         const element = event.target;
 
-        if (element.getAttribute('type') === 'checkbox') {
-            if (formData[element.name]) {
-                updateFormData(element.name, false);
-            } else {
-                updateFormData(element.name, true);
-            }
-        } else {
-            updateFormData(element.name, element.value);
-        }
 
-        yup.reach(registerFormSchema, element.name)
+        updateFormData(element.name, element.value);
+
+        yup.reach(loginFormSchema, element.name)
             .validate(formData[element.name])
             .then(valid => {
                 setErrors({...errors, [element.name]: ''});
@@ -63,7 +48,7 @@ export default function RegisterForm(props) {
     }
 
     useEffect(() => {
-        registerFormSchema.isValid(formData)
+        loginFormSchema.isValid(formData)
             .then((valid) => {
                 if (valid) {
                     setDisabled(false);
@@ -77,7 +62,7 @@ export default function RegisterForm(props) {
     function onSubmitHandler(event) {
         event.preventDefault();
 
-        axios.post(REGISTER_URL, formData)
+        axios.post(LOGIN_URL, formData)
             .then((response) => {
                 console.log(response);
             })
@@ -86,7 +71,7 @@ export default function RegisterForm(props) {
     
 
     return (
-        <div className="register container">
+        <div className="login container">
             {
                 Object.keys(errors).map((item, key) => {
                     if (errors[item]) {
@@ -105,11 +90,7 @@ export default function RegisterForm(props) {
             <div className="row">
                 <div className="col-lg-6">
                     <Form autoComplete="off">
-                        <h2>New Account</h2>
-                        <FormGroup>
-                            <Label>Name:</Label>
-                            <Input type="text" name="name" onChange={inputOnChangeHandler}/>
-                        </FormGroup>
+                        <h2>Log In</h2>
                         <FormGroup>
                             <Label>E-mail:</Label>
                             <Input type="email" name="email" onChange={inputOnChangeHandler} />
@@ -119,26 +100,10 @@ export default function RegisterForm(props) {
                             <Input type="password" name="password" onChange={inputOnChangeHandler} />
                         </FormGroup>
                         <FormGroup>
-                            <Label>Cohort:</Label>
-                            <Input type="text" name="cohort" onChange={inputOnChangeHandler} />
-                        </FormGroup>
-                        <FormGroup check>
-                            <Label check>
-                                <Input type="checkbox" id="helper" name="helper" onChange={inputOnChangeHandler} />{' '}
-                                Helper
-                            </Label>
-                        </FormGroup>
-                        <FormGroup check>
-                            <Label check>
-                                <Input type="checkbox" id="student" name="student" onChange={inputOnChangeHandler} />{' '}
-                                Student
-                            </Label>
-                        </FormGroup>
-                        <FormGroup>
-                            <Button disabled={disabled} onClick={onSubmitHandler} className="btn btn-danger">Register</Button>
+                            <Button disabled={disabled} onClick={onSubmitHandler} className="btn btn-danger">Log In</Button>
                         </FormGroup>
                     </Form>
-                    Already have an account? <Link to="/login">Log In</Link>
+                    Don't have an account? <Link to="/register">Register</Link>
                 </div>
             </div>
         </div>
