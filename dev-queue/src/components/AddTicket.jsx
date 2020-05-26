@@ -5,7 +5,6 @@ const AddTicket = (props) => {
     const initialState = { subject: '', ticket_text: '' };
     console.log('AddTicket Props: ', props);
     const [ticketData, setTicketData] = useState(initialState);
-
     const handleChange = (e) => {
         const newTicketData = {
             ...ticketData,
