@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { authenticatedAxios } from '../utils/authenticAxios';
+import React from 'react';
 import Axios from 'axios';
+import { handleChange } from './Dashboard';
 
 class Register extends React.Component {
     state = {
@@ -14,14 +12,14 @@ class Register extends React.Component {
         },
     };
 
-    handleChange = (e) => {
-        this.setState({
-            creds: {
-                ...this.state.creds,
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
+    // handleChange = (e) => {
+    //     this.setState({
+    //         creds: {
+    //             ...this.state.creds,
+    //             [e.target.name]: e.target.value,
+    //         },
+    //     });
+    // };
     handleCheckBox = (e) => {
         this.setState({
             creds: {
@@ -57,7 +55,7 @@ class Register extends React.Component {
                             type="text"
                             name="name"
                             value={this.state.creds.name}
-                            onChange={this.handleChange}
+                            onChange={handleChange}
                         />
                     </label>
                     <label>
@@ -66,7 +64,7 @@ class Register extends React.Component {
                             type="text"
                             name="email"
                             value={this.state.creds.email}
-                            onChange={this.handleChange}
+                            onChange={handleChange}
                         />
                     </label>
                     <label>
@@ -75,7 +73,7 @@ class Register extends React.Component {
                             type="text"
                             name="password"
                             value={this.state.creds.password}
-                            onChange={this.handleChange}
+                            onChange={handleChange}
                         />
                     </label>
                     <label>
@@ -84,7 +82,7 @@ class Register extends React.Component {
                             type="text"
                             name="cohort"
                             value={this.state.creds.cohort}
-                            onChange={this.handleChange}
+                            onChange={handleChange}
                         />
                     </label>
                     <label>

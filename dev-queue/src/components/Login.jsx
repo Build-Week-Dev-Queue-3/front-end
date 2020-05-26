@@ -1,12 +1,11 @@
 import React from 'react';
-import { authenticatedAxios } from '../utils/authenticAxios';
 import Axios from 'axios';
 
 class Login extends React.Component {
     state = {
         creds: {
-            email: '',
-            password: '',
+            email: 'testt@email.com',
+            password: 'encrypted',
         },
     };
 

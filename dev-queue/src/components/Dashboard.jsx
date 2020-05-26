@@ -2,24 +2,46 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchData } from '../store/actions';
 
+export const handleChange = (e) => {
+    this.setState({
+        creds: {
+            ...this.state.creds,
+            [e.target.name]: e.target.value,
+        },
+    });
+};
+
 const Dashboard = (props) => {
-    console.log(props.apiData);
+    // console.log('props', props);
 
     useEffect(() => {
-        props.fetchData('');
+        props.fetchData('tickets');
     }, []);
     return (
         <section>
             <h2>this is the dashboard as of now.</h2>
-            <h3>Getting a response from the backend server.</h3>
-            {!props.fetchData.api && <h3>{props.fetchData.api} </h3>}
+            {props.data &&
+                props.data.map((queue) => {
+                    // console.log(queue);
+                    return (
+                        <div key={queue.id}>
+                            <h3>{queue.subject}</h3>
+                            <h6>Status {queue.status}</h6>
+                            <p>Submited by: {queue.name}</p>
+                            <h4>Description: </h4>
+                            <p>{queue.ticket_text}</p>
+                        </div>
+                    );
+                })}
         </section>
     );
 };
 const mapStateToProps = (state) => {
-    console.log('mSTP State: ', state);
+    // console.log('mSTP State: ', state);
     return {
-        apiData: state.dataFetchReducer.dataArray,
+        error: state.dataFetchReducer.error,
+        isFetching: state.dataFetchReducer.isFetching,
+        data: state.dataFetchReducer.dataArray.data,
     };
 };
 
