@@ -1,15 +1,15 @@
-import axios from 'axios';
+import { authenticatedAxios } from '../../utils/authenticAxios';
 export const FETCH_DATA_START = 'FETCH_DATA_START';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
 // Initial fetch of data
-export const fetchData = () => {
+export const fetchData = (link) => {
     return (dispatch) => {
         dispatch({ type: FETCH_DATA_START });
 
-        axios
-            .get(``)
+        authenticatedAxios()
+            .get(`/${link}`)
             .then((res) => {
                 console.log('actions axios res: ', res);
                 dispatch({
