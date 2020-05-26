@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchData } from '../store/actions';
+
 const AddTicket = (props) => {
     const initialState = { subject: '', ticket_text: '' };
     console.log('AddTicket Props: ', props);
@@ -12,6 +15,7 @@ const AddTicket = (props) => {
         };
         return setTicketData(newTicketData);
     };
+    const { push } = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,6 +23,7 @@ const AddTicket = (props) => {
             .post('tickets', ticketData)
             .then((res) => {
                 console.log(res);
+                push('/');
                 setTicketData(initialState);
             })
             .catch((err) => {
@@ -54,4 +59,9 @@ const AddTicket = (props) => {
     );
 };
 
-export default AddTicket;
+const mapStateToProps = (state) => {
+    // console.log('mSTP State: ', state);
+    return {};
+};
+
+export default connect(null, { fetchData })(AddTicket);

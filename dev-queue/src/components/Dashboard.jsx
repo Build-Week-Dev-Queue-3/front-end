@@ -4,7 +4,6 @@ import { fetchData } from '../store/actions';
 
 const Dashboard = (props) => {
     // console.log('props', props);
-
     useEffect(() => {
         props.fetchData('tickets');
     }, []);
