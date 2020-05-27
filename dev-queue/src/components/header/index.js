@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.css';
+import { Button } from 'reactstrap';
 
 export default function Header(props) {
     const { push } = useHistory();
     const logOut = (event) => {
         event.preventDefault();
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('you');
         props.setLoggedIn(false);
+
         push('/');
     };
     return (
@@ -36,15 +40,9 @@ export default function Header(props) {
                                     >
                                         All Tickets
                                     </Link>
-                                    <Link className="header__nav-link" to="/my">
-                                        My Tickets
-                                    </Link>
-                                    <Link
-                                        className="header__nav-link"
-                                        to="/create"
-                                    >
-                                        Create
-                                    </Link>
+                                    <Link className="header__nav-link" to="/my">My Tickets</Link>
+                                    <Link className="header__nav-link" to="/profile">My Profile</Link>
+                                    <Link className="header__nav-link" to="/create">Create a Ticket</Link>
                                     <a href="#" className="header__nav-link header__nav-link--right" onClick={logOut}>Log Out</a>
                                 </>
                             )}

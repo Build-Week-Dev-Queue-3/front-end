@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 import Ticket from '../Ticket';
 
-const Dashboard = (props) => {
+const TicketList = (props) => {
     const [tickets, setTickets] = useState();
 
     useEffect(() => {
@@ -28,4 +28,4 @@ const Dashboard = (props) => {
     );
 };
 
-export default Dashboard;
+export default TicketList;

@@ -15,7 +15,6 @@ const MyTickets = () => {
         authenticatedAxios()
             .get(`tickets/users/${userId}`)
             .then((res) => {
-                console.log(res);
                 setMyTickets(res.data.data);
             })
             .catch((err) => {
