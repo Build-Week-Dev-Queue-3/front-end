@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from "react-router-dom";
 import './App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/AddTicket/dev/Login';
@@ -7,18 +8,38 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 // import PrivateRoute from './utils/PrivateRoute';
 
+import Header from './components/header';
+import RegisterForm from './components/register';
+import LoginForm from './components/login';
+
+
 function App() {
     return (
-        <Router>
-            <div className="App">
-                <Login />
-                {/* <Register /> */}
-                <br />
-                <AddTicket />
-                <br />
-                <Dashboard />
-            </div>
-        </Router>
+        <>
+            <Header />
+            <Switch>
+
+                // Dashboard
+                <Route exact path="/">
+                    <Dashboard />
+                </Route>
+      
+                <Route path="/create">
+                  <AddTicket />
+                </Route>
+                
+                // Login page
+                <Route path="/login">
+                    <LoginForm />
+                </Route>
+
+                // Register page
+                <Route path="/register">
+                    <RegisterForm />
+                </Route>
+
+            </Switch>
+        </>
     );
 }
 
