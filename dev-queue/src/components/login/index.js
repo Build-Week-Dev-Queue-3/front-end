@@ -15,6 +15,7 @@ import {
 import loginFormSchema from './loginFormSchema';
 
 export default function LoginForm(props) {
+    console.log('props yooo: ', props);
     const initialErrors = {
         email: '',
         password: '',
@@ -33,7 +34,6 @@ export default function LoginForm(props) {
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
     let [disabled, setDisabled] = useState(true);
-    let [loggedIn, setLoggedIn] = useState(!token && false);
     const [user, setUser] = useState();
 
     function updateFormData(key, value) {
@@ -73,10 +73,11 @@ export default function LoginForm(props) {
             .post(LOGIN_URL, formData)
             .then((response) => {
                 console.log(response);
+                push('/');
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('userId', response.data.user.id);
                 setUser(response.data.user);
-                setLoggedIn(true);
+                props.setLoggedIn(true);
                 push('/');
             })
             .catch((error) => console.log(error));
@@ -119,17 +120,16 @@ export default function LoginForm(props) {
                             />
                         </FormGroup>
                         <FormGroup>
-                            {loggedIn && (
+                            {props.loggedIn ? (
                                 <Button
                                     onClick={() => {
-                                        setLoggedIn(false);
+                                        props.setLoggedIn(false);
                                         localStorage.removeItem('token');
                                     }}
                                 >
                                     Log Out
                                 </Button>
-                            )}
-                            {!loggedIn && (
+                            ) : (
                                 <Button
                                     disabled={disabled}
                                     onClick={onSubmitHandler}
