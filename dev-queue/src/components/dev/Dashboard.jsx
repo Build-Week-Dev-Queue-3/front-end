@@ -1,17 +1,25 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchData } from '../../store/actions';
+import React, { useEffect, useState } from 'react';
+import { authenticatedAxios } from '../../utils/authenticAxios';
 
 const Dashboard = (props) => {
     console.log('props', props);
+    const [tickets, setTickets] = useState();
     useEffect(() => {
-        props.fetchData('tickets');
+        authenticatedAxios()
+            .get('tickets')
+            .then((res) => {
+                console.log(res);
+                setTickets(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
     return (
         <section>
             <h2>this is the dashboard as of now.</h2>
-            {props.data &&
-                props.data.map((queue) => {
+            {tickets &&
+                tickets.data.map((queue) => {
                     console.log(queue);
                     return (
                         <div key={queue.id}>
@@ -26,13 +34,5 @@ const Dashboard = (props) => {
         </section>
     );
 };
-const mapStateToProps = (state) => {
-    // console.log('mSTP State: ', state);
-    return {
-        error: state.dataFetchReducer.error,
-        isFetching: state.dataFetchReducer.isFetching,
-        data: state.dataFetchReducer.dataArray.data,
-    };
-};
 
-export default connect(mapStateToProps, { fetchData })(Dashboard);
+export default Dashboard;

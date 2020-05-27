@@ -5,7 +5,7 @@ import Login from './components/dev/Login';
 import AddTicket from './components/AddTicket/AddTicket';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-// import PrivateRoute from './utils/PrivateRoute';
+import PrivateRoute from './utils/PrivateRouter';
 
 import Header from './components/header';
 import RegisterForm from './components/register';
@@ -17,12 +17,12 @@ function App() {
             <Header />
             <Switch>
                 // Dashboard
-                <Route exact path="/">
+                <PrivateRoute exact path="/">
                     <Dashboard />
-                </Route>
-                <Route path="/create">
+                </PrivateRoute>
+                <PrivateRoute path="/create">
                     <AddTicket />
-                </Route>
+                </PrivateRoute>
                 // Login page
                 <Route path="/login">
                     <LoginForm />
