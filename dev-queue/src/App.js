@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Dashboard from './components/dev/Dashboard';
 import AddTicket from './components/AddTicket/AddTicket';
@@ -12,27 +12,31 @@ import LoginForm from './components/login';
 import MyTickets from './components/MyTickets/MyTickets';
 
 function App() {
+    const token = localStorage.getItem('token');
+
+    const [loggedIn, setLoggedIn] = useState(token && true);
+
     return (
         <>
-            <Header />
+            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <Switch>
                 // Dashboard
-                <PrivateRoute exact path="/">
-                    <Dashboard />
-                </PrivateRoute>
-                <PrivateRoute path="/create">
-                    <AddTicket />
-                </PrivateRoute>
+                <PrivateRoute exact path="/" component={Dashboard} />
+                {/* <Dashboard />
+                </PrivateRoute> */}
+                <PrivateRoute path="/create" component={AddTicket} />
+                {/* <AddTicket />
+                </PrivateRoute> */}
                 // Login page
                 <Route path="/login">
-                    <LoginForm />
+                    <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
                 </Route>
                 // Register page
                 <Route path="/register">
                     <RegisterForm />
                 </Route>
-                <Route path="/all" component={Dashboard} />
-                <Route path="/my" component={MyTickets} />
+                <PrivateRoute path="/all" component={Dashboard} />
+                <PrivateRoute path="/my" component={MyTickets} />
             </Switch>
         </>
     );

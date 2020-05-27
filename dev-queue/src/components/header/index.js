@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import './Header.css';
 
 export default function Header(props) {
+    const { push } = useHistory();
+    const logOut = () => {
+        localStorage.removeItem('token');
+        props.setLoggedIn(false);
+        push('/');
+    };
     return (
         <header className="header">
             <div className="container">
@@ -14,23 +20,38 @@ export default function Header(props) {
                     </div>
                     <div className="col-lg-10">
                         <nav className="header__nav">
-                            <>
-                                <Link className="header__nav-link" to="/all">
-                                    All Tickets
+                            {!props.loggedIn ? (
+                                <Link
+                                    className="header__nav-link header__nav-link--right"
+                                    to="/login"
+                                >
+                                    Log In
                                 </Link>
-                                <Link className="header__nav-link" to="/my">
-                                    My Tickets
-                                </Link>
-                                <Link className="header__nav-link" to="/create">
-                                    Create
-                                </Link>
-                            </>
-                            <Link
-                                className="header__nav-link header__nav-link--right"
-                                to="/login"
-                            >
-                                Log In
-                            </Link>
+                            ) : (
+                                <>
+                                    <Link
+                                        className="header__nav-link"
+                                        to="/all"
+                                    >
+                                        All Tickets
+                                    </Link>
+                                    <Link className="header__nav-link" to="/my">
+                                        My Tickets
+                                    </Link>
+                                    <Link
+                                        className="header__nav-link"
+                                        to="/create"
+                                    >
+                                        Create
+                                    </Link>
+                                    <p
+                                        className="header__nav-link header__nav-link--right"
+                                        onClick={logOut}
+                                    >
+                                        Log Out
+                                    </p>
+                                </>
+                            )}
                         </nav>
                     </div>
                 </div>
