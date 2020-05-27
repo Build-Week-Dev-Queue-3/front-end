@@ -1,8 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap");
+
 body {
     background-color: #f9fafb;
     color: #646378;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
     color: black;
+    text-transform: capitalize;
+}
+
+h5 {
+    font-size: 1rem;
+    font-weight: bold;
 }

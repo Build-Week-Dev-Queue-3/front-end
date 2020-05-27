@@ -15,7 +15,6 @@ import {
 import loginFormSchema from './loginFormSchema';
 
 export default function LoginForm(props) {
-    console.log('props yooo: ', props);
     const initialErrors = {
         email: '',
         password: '',
@@ -72,7 +71,6 @@ export default function LoginForm(props) {
         axios
             .post(LOGIN_URL, formData)
             .then((response) => {
-                console.log(response);
                 push('/');
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('userId', response.data.user.id);
@@ -83,7 +81,6 @@ export default function LoginForm(props) {
             .catch((error) => console.log(error));
     }
 
-    console.log(user);
     return (
         <div className="login container">
             {Object.keys(errors).map((item, key) => {

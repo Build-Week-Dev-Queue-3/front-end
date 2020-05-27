@@ -4,7 +4,8 @@ import './Header.css';
 
 export default function Header(props) {
     const { push } = useHistory();
-    const logOut = () => {
+    const logOut = (event) => {
+        event.preventDefault();
         localStorage.removeItem('token');
         props.setLoggedIn(false);
         push('/');
@@ -31,7 +32,7 @@ export default function Header(props) {
                                 <>
                                     <Link
                                         className="header__nav-link"
-                                        to="/all"
+                                        to="/"
                                     >
                                         All Tickets
                                     </Link>
@@ -44,12 +45,7 @@ export default function Header(props) {
                                     >
                                         Create
                                     </Link>
-                                    <p
-                                        className="header__nav-link header__nav-link--right"
-                                        onClick={logOut}
-                                    >
-                                        Log Out
-                                    </p>
+                                    <a href="#" className="header__nav-link header__nav-link--right" onClick={logOut}>Log Out</a>
                                 </>
                             )}
                         </nav>
