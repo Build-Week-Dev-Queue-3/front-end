@@ -30,6 +30,7 @@ function App() {
                 <Route path="/register">
                     <RegisterForm />
                 </Route>
+                <Route path="/all" component={Dashboard} />
             </Switch>
         </>
     );
