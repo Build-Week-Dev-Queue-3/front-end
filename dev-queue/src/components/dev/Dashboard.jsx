@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchData } from '../store/actions';
+import { fetchData } from '../../store/actions';
 
 const Dashboard = (props) => {
     console.log('props', props);
