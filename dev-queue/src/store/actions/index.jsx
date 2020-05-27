@@ -11,7 +11,6 @@ export const fetchData = (link) => {
         authenticatedAxios()
             .get(`/${link}`)
             .then((res) => {
-                console.log('actions axios res: ', res);
                 dispatch({
                     type: FETCH_DATA_SUCCESS,
                     payload: res.data,

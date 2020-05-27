@@ -32,7 +32,7 @@ export default function Header(props) {
                                 <>
                                     <Link
                                         className="header__nav-link"
-                                        to="/all"
+                                        to="/"
                                     >
                                         All Tickets
                                     </Link>
