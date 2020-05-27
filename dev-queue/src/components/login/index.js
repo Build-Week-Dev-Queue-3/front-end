@@ -34,7 +34,6 @@ export default function LoginForm(props) {
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
     let [disabled, setDisabled] = useState(true);
-    const [user, setUser] = useState();
 
     function updateFormData(key, value) {
         setFormData({ ...formData, [key]: value });
@@ -76,14 +75,13 @@ export default function LoginForm(props) {
                 push('/');
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('userId', response.data.user.id);
-                setUser(response.data.user);
+                localStorage.setItem('you', JSON.stringify(response.data.user));
                 props.setLoggedIn(true);
                 push('/');
             })
             .catch((error) => console.log(error));
     }
 
-    console.log(user);
     return (
         <div className="login container">
             {Object.keys(errors).map((item, key) => {

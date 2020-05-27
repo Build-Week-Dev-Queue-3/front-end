@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 
 const Dashboard = (props) => {
-    console.log('props', props);
     const [tickets, setTickets] = useState();
     useEffect(() => {
         authenticatedAxios()
             .get('tickets')
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setTickets(res.data);
             })
             .catch((err) => {
@@ -20,7 +19,7 @@ const Dashboard = (props) => {
             <h2>All open tickets: </h2>
             {tickets &&
                 tickets.data.map((queue) => {
-                    console.log(queue);
+                    // console.log(queue);
                     return (
                         <div key={queue.id}>
                             <h3>{queue.subject}</h3>

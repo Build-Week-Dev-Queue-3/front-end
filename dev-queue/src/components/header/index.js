@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.css';
+import { Button } from 'reactstrap';
 
 export default function Header(props) {
     const { push } = useHistory();
     const logOut = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('you');
         props.setLoggedIn(false);
+
         push('/');
     };
     return (
@@ -44,12 +48,12 @@ export default function Header(props) {
                                     >
                                         Create
                                     </Link>
-                                    <p
+                                    <Button
                                         className="header__nav-link header__nav-link--right"
                                         onClick={logOut}
                                     >
                                         Log Out
-                                    </p>
+                                    </Button>
                                 </>
                             )}
                         </nav>

@@ -46,8 +46,7 @@ const AddTicket = (props) => {
                 </label>
                 <label>
                     Ticket Description:
-                    <input
-                        type="text"
+                    <textarea
                         name="ticket_text"
                         onChange={handleChange}
                         value={ticketData.ticket_text}
