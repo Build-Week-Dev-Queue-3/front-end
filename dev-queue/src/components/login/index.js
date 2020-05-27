@@ -28,6 +28,8 @@ export default function LoginForm(props) {
     const LOGIN_URL = 'https://bwdevdesk3.herokuapp.com/auth/login';
     const token = localStorage.getItem('token');
 
+    const { push } = useHistory();
+
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
     let [disabled, setDisabled] = useState(true);
@@ -75,6 +77,7 @@ export default function LoginForm(props) {
                 localStorage.setItem('userId', response.data.user.id);
                 setUser(response.data.user);
                 setLoggedIn(true);
+                push('/');
             })
             .catch((error) => console.log(error));
     }

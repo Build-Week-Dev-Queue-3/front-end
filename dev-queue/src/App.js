@@ -9,6 +9,7 @@ import PrivateRoute from './utils/PrivateRouter';
 import Header from './components/header';
 import RegisterForm from './components/register';
 import LoginForm from './components/login';
+import MyTickets from './components/MyTickets/MyTickets';
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <RegisterForm />
                 </Route>
                 <Route path="/all" component={Dashboard} />
+                <Route path="/my" component={MyTickets} />
             </Switch>
         </>
     );
