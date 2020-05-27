@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
+import Ticket from '../Ticket';
 
 const Dashboard = (props) => {
     const [tickets, setTickets] = useState();
@@ -8,7 +9,7 @@ const Dashboard = (props) => {
         authenticatedAxios()
             .get('tickets')
             .then((res) => {
-                setTickets(res.data);
+                setTickets(res.data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -16,22 +17,14 @@ const Dashboard = (props) => {
     }, []);
     
     return (
-        <section>
-            <h2>All open tickets: </h2>
-            {tickets &&
-                tickets.data.map((queue) => {
-                    console.log(queue);
-                    return (
-                        <div key={queue.id}>
-                            <h3>{queue.subject}</h3>
-                            <h6>Status {queue.status}</h6>
-                            <p>Submited by: {queue.name}</p>
-                            <h4>Description: </h4>
-                            <p>{queue.ticket_text}</p>
-                        </div>
-                    );
-                })}
-        </section>
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h2>All tickets: </h2>
+                </div>
+            </div>
+            {tickets && tickets.map((queue, key) => <Ticket queue={queue} key={key} />)}
+        </div>
     );
 };
 
