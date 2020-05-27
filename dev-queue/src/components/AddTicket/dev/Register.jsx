@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { authenticatedAxios } from '../utils/authenticAxios';
+import { authenticatedAxios } from '../../../utils/authenticAxios';
 import Axios from 'axios';
 
 class Register extends React.Component {

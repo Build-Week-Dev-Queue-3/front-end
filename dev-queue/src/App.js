@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import AddTicket from './components/AddTicket';
+import Login from './components/AddTicket/dev/Login';
+import AddTicket from './components/AddTicket/AddTicket';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 // import PrivateRoute from './utils/PrivateRoute';

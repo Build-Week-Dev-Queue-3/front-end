@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { authenticatedAxios } from '../utils/authenticAxios';
+import { authenticatedAxios } from '../../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchData } from '../store/actions';
+import { fetchData } from '../../store/actions';
 
 const AddTicket = (props) => {
     const initialState = { subject: '', ticket_text: '' };
