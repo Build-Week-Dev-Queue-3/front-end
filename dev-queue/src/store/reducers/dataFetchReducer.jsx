@@ -7,7 +7,7 @@ import {
 export const initialState = {
     isFetching: false,
     error: '',
-    dataArray: '',
+    dataArray: {},
 };
 
 export const dataFetchReducer = (state = initialState, action) => {
