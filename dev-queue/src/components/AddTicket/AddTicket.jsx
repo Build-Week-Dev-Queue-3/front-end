@@ -1,60 +1,116 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchData } from '../../store/actions';
+import addTicketSchema from './addTicketSchema';
+import {
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Button,
+    UncontrolledAlert,
+} from 'reactstrap';
+import * as yup from 'yup';
 
 const AddTicket = (props) => {
-    const initialState = { subject: '', ticket_text: '' };
-    // console.log('AddTicket Props: ', props);
-    const [ticketData, setTicketData] = useState(initialState);
-    const handleChange = (e) => {
-        const newTicketData = {
-            ...ticketData,
-            [e.target.name]: e.target.value,
-        };
-        return setTicketData(newTicketData);
-    };
+    const initialFormData = { subject: '', ticket_text: '' };
+    const initialErrors = { subject: '', ticket_text: '' };
+
+    const [formData, setFormData] = useState(initialFormData);
+    const [errors, setErrors] = useState(initialErrors);
+    const [disabled, setDisabled] = useState(true);
+    
     const { push } = useHistory();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+
+    function updateFormData(key, value) {
+        setFormData({ ...formData, [key]: value});
+    }
+
+    function inputOnChangeHandler(event) {
+        const element = event.target;
+
+        updateFormData(element.name, element.value);
+
+        yup.reach(addTicketSchema, element.name)
+            .validate(formData[element.name])
+            .then((valid) => {
+                setErrors({ ...errors, [element.name]: '' });
+            })
+            .catch((err) => {
+                setErrors({ ...errors, [element.name]: err.errors[0] });
+            });
+    }
+
+    useEffect(() => {
+        addTicketSchema.isValid(formData).then((valid) => {
+            if (valid) {
+                setDisabled(false);
+                setErrors(initialErrors);
+            } else {
+                setDisabled(true);
+            }
+        });
+    }, [formData]);
+
+    function onSubmitHandler(event) {
+        event.preventDefault();
+
         authenticatedAxios()
-            .post('tickets', ticketData)
+            .post('tickets', formData)
             .then((res) => {
-                console.log(res);
                 push('/');
-                setTicketData(initialState);
+                setFormData(initialFormData);
             })
             .catch((err) => {
                 console.log(err);
             });
-    };
-    // console.log(ticketData);
+    }
+
     return (
-        <section>
-            <form onSubmit={handleSubmit}>
-                <h2>Add a Ticket</h2>
-                <label>
-                    Subject:
-                    <input
-                        type="text"
-                        name="subject"
-                        onChange={handleChange}
-                        value={ticketData.subject}
-                    />
-                </label>
-                <label>
-                    Ticket Description:
-                    <textarea
-                        name="ticket_text"
-                        onChange={handleChange}
-                        value={ticketData.ticket_text}
-                    />
-                </label>
-                <button>Submit Ticket</button>
-            </form>
-        </section>
+        <div className="container">
+
+            {Object.keys(errors).map((item, key) => {
+                if (errors[item]) {
+                    return (
+                        <div className="row" key={key}>
+                            <div className="col">
+                                <UncontrolledAlert color="danger">
+                                    {errors[item]}
+                                </UncontrolledAlert>
+                            </div>
+                        </div>
+                    );
+                }
+            })}
+
+            <div className="row">
+                <div className="col">
+                    <h2>Create a Ticket</h2>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-lg-6">
+                    <Form autoComplete="off">
+                        <FormGroup>
+                            <Label>Subject:</Label>
+                            <Input type="text" name="subject" onChange={inputOnChangeHandler} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Please describe the issue:</Label>
+                            <Input type="textarea" name="ticket_text" onChange={inputOnChangeHandler} rows="10" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Button className="btn btn-danger" disabled={disabled} onClick={onSubmitHandler}>Done</Button>
+                        </FormGroup>
+                    </Form>
+
+                </div>
+            </div>
+        </div>
     );
 };
 
