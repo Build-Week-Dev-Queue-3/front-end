@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
+import Ticket from '../Ticket';
+
 const userId = localStorage.getItem('userId');
-console.log(userId);
+
+// console.log(userId);
+
 const MyTickets = () => {
+
     const [myTickets, setMyTickets] = useState();
+
     useEffect(() => {
         authenticatedAxios()
             .get(`tickets/users/${userId}`)
@@ -16,30 +22,18 @@ const MyTickets = () => {
                 console.log(err);
             });
     }, []);
+
     const { push } = useHistory();
+
     return (
-        <section>
-            <h2>My Tickets will display here</h2>
-            {myTickets && console.log(myTickets)}
-            {myTickets &&
-                myTickets.map((queue) => {
-                    console.log(queue);
-                    return (
-                        <div
-                            key={queue.id}
-                            onClick={() => {
-                                push('/userTicket'); //  CHECK URL WHEN THE TICKET PAGE GETS DONE //
-                            }}
-                        >
-                            <h3>{queue.subject}</h3>
-                            <h6>Status {queue.status}</h6>
-                            <p>Submited by: {queue.name}</p>
-                            <h4>Description: </h4>
-                            <p>{queue.ticket_text}</p>
-                        </div>
-                    );
-                })}
-        </section>
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h2>My tickets: </h2>
+                </div>
+            </div>
+            {myTickets && myTickets.map((queue, key) => <Ticket queue={queue} key={key} />)}
+        </div>
     );
 };
 export default MyTickets;
