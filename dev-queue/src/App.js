@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import Dashboard from './components/dev/Dashboard';
-import Login from './components/dev/Login';
 import AddTicket from './components/AddTicket/AddTicket';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-// import PrivateRoute from './utils/PrivateRoute';
+import PrivateRoute from './utils/PrivateRouter';
 
 import Header from './components/header';
 import RegisterForm from './components/register';
 import LoginForm from './components/login';
+import MyTickets from './components/MyTickets/MyTickets';
 
 function App() {
     return (
@@ -17,12 +17,12 @@ function App() {
             <Header />
             <Switch>
                 // Dashboard
-                <Route exact path="/">
+                <PrivateRoute exact path="/">
                     <Dashboard />
-                </Route>
-                <Route path="/create">
+                </PrivateRoute>
+                <PrivateRoute path="/create">
                     <AddTicket />
-                </Route>
+                </PrivateRoute>
                 // Login page
                 <Route path="/login">
                     <LoginForm />
@@ -31,6 +31,8 @@ function App() {
                 <Route path="/register">
                     <RegisterForm />
                 </Route>
+                <Route path="/all" component={Dashboard} />
+                <Route path="/my" component={MyTickets} />
             </Switch>
         </>
     );
