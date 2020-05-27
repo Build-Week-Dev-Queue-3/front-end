@@ -17,7 +17,7 @@ const Dashboard = (props) => {
     }, []);
     return (
         <section>
-            <h2>this is the dashboard as of now.</h2>
+            <h2>All open tickets: </h2>
             {tickets &&
                 tickets.data.map((queue) => {
                     console.log(queue);

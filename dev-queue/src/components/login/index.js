@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 
@@ -26,10 +26,13 @@ export default function LoginForm(props) {
     };
 
     const LOGIN_URL = 'https://bwdevdesk3.herokuapp.com/auth/login';
+    const token = localStorage.getItem('token');
 
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
     let [disabled, setDisabled] = useState(true);
+    let [loggedIn, setLoggedIn] = useState(!token && false);
+    const [user, setUser] = useState();
 
     function updateFormData(key, value) {
         setFormData({ ...formData, [key]: value });
@@ -69,10 +72,14 @@ export default function LoginForm(props) {
             .then((response) => {
                 console.log(response);
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userId', response.data.user.id);
+                setUser(response.data.user);
+                setLoggedIn(true);
             })
             .catch((error) => console.log(error));
     }
 
+    console.log(user);
     return (
         <div className="login container">
             {Object.keys(errors).map((item, key) => {
@@ -109,13 +116,25 @@ export default function LoginForm(props) {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Button
-                                disabled={disabled}
-                                onClick={onSubmitHandler}
-                                className="btn btn-danger"
-                            >
-                                Log In
-                            </Button>
+                            {loggedIn && (
+                                <Button
+                                    onClick={() => {
+                                        setLoggedIn(false);
+                                        localStorage.removeItem('token');
+                                    }}
+                                >
+                                    Log Out
+                                </Button>
+                            )}
+                            {!loggedIn && (
+                                <Button
+                                    disabled={disabled}
+                                    onClick={onSubmitHandler}
+                                    className="btn btn-danger"
+                                >
+                                    Log In
+                                </Button>
+                            )}
                         </FormGroup>
                     </Form>
                     Don't have an account? <Link to="/register">Register</Link>

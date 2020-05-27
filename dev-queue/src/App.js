@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Dashboard from './components/dev/Dashboard';
-import Login from './components/dev/Login';
 import AddTicket from './components/AddTicket/AddTicket';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
