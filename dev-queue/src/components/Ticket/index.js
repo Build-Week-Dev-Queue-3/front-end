@@ -15,20 +15,31 @@ export default function Ticket(props) {
     const edit = (e) => {
         e.preventDefault();
         setEditing(!editing);
+        authenticatedAxios()
+            .get('users')
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
-    console.log(editing);
 
+    console.log(editing);
+    console.log(props.queue);
     const handleChanges = (e) => {
         e.persist();
         setTicket({
             ...ticket,
             [e.target.name]: e.target.value,
+            user_id: you.id,
         });
     };
-    const handleSubmit = (e) => {
+
+    const handleEdit = (e) => {
         e.preventDefault();
         authenticatedAxios()
-            .put(`/tickets/:id/user/:uid`, ticket)
+            .put(`tickets/${id}/user/${you.id}`, ticket)
             .then((res) => {
                 console.log(res);
                 edit();
@@ -37,7 +48,9 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
+
     const { push } = useHistory();
+
     const deletePost = (e) => {
         e.preventDefault();
         authenticatedAxios()
@@ -52,7 +65,7 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log(ticket);
+    console.log('ticket', ticket);
     return (
         <div className="row ticket">
             <div className="col">
@@ -67,12 +80,12 @@ export default function Ticket(props) {
                     </div>
                     <div className="col ticket__content">
                         {editing ? (
-                            <form onSubmit={handleSubmit}>
+                            <form>
                                 <h3>
                                     Subject:{' '}
                                     <input
                                         name="subject"
-                                        value={subject}
+                                        value={ticket.subject}
                                         onChange={handleChanges}
                                     />
                                 </h3>
@@ -80,12 +93,12 @@ export default function Ticket(props) {
                                     Description:{' '}
                                     <textarea
                                         name="ticket_text"
-                                        value={ticket_text}
+                                        value={ticket.ticket_text}
                                         onChange={handleChanges}
                                     />
                                 </p>
-                                <button>Submit</button>
-                                <button>Cancel</button>
+                                <button onClick={handleEdit}>Submit</button>
+                                <button onClick={edit}>Cancel</button>
                             </form>
                         ) : (
                             <>

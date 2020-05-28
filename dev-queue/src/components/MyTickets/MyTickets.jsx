@@ -19,7 +19,7 @@ const MyTickets = () => {
                 console.log(err);
             });
     }, []);
-
+    console.log('myTickets', myTickets);
     return (
         <div className="container">
             <div className="row">
