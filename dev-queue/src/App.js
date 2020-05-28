@@ -17,7 +17,7 @@ import TicketDetails from './components/TicketDetails';
 function App() {
     const token = localStorage.getItem('token');
     const [loggedIn, setLoggedIn] = useState(token && true);
-
+    document.title = 'Dev-Desk-Queue';
     return (
         <>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />

@@ -51,7 +51,7 @@ const EditProfile = (props) => {
                     <button onClick={editProfile}>Edit your profile</button>
                 </>
             ) : (
-                <form onSubmit={handleSubmit}>
+                <form>
                     <label>
                         Name:{' '}
                         <input
@@ -71,7 +71,7 @@ const EditProfile = (props) => {
                         />
                     </label>{' '}
                     <button onClick={editProfile}>Cancel</button>
-                    <button>Submit</button>
+                    <button onClick={handleSubmit}>Submit</button>
                 </form>
             )}{' '}
         </section>

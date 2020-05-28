@@ -5,10 +5,15 @@ import { Button } from 'reactstrap';
 const MyProfile = (props) => {
     console.log('these are your props: ', props.you);
     const you = JSON.parse(localStorage.getItem('you'));
-    const [editing, setEditing] = useState(false);
     const [profile, setProfile] = useState(you);
+    const [editing, setEditing] = useState(false);
+
     const editProfile = () => {
         setEditing(!editing);
+        setProfile({
+            ...profile,
+            password: '',
+        });
     };
     console.log(profile);
 
@@ -20,8 +25,7 @@ const MyProfile = (props) => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         authenticatedAxios()
             .put(`users/${profile.id}`, profile)
             .then((res) => {
@@ -66,7 +70,7 @@ const MyProfile = (props) => {
                     </div>
                 </div>
             ) : (
-                <form onSubmit={handleSubmit}>
+                <form>
                     <label>
                         Name:{' '}
                         <input
@@ -79,14 +83,31 @@ const MyProfile = (props) => {
                     <label>
                         Email:{' '}
                         <input
-                            name="name"
+                            name="email"
                             type="text"
                             value={profile.email}
                             onChange={handleChanges}
                         />
                     </label>{' '}
-                    <button onClick={editProfile}>Cancel</button>
-                    <button>Submit</button>
+                    <label>
+                        Password:{' '}
+                        <input
+                            name="password"
+                            type="password"
+                            value={profile.password}
+                            onChange={handleChanges}
+                        />
+                    </label>{' '}
+                    <button onClick={editing}>Cancel</button>
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+
+                            handleSubmit();
+                        }}
+                    >
+                        Submit
+                    </button>
                 </form>
             )}{' '}
         </div>
