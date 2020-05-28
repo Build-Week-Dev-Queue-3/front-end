@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import PrivateRoute from './utils/PrivateRouter';
 
-import Header from './components/Header';
-import RegisterForm from './components/Register';
-import LoginForm from './components/Login';
+import Header from './components/header';
+import RegisterForm from './components/register';
+import LoginForm from './components/login';
 import MyTickets from './components/MyTickets/MyTickets';
 import TicketList from './components/TicketList';
 import MyProfile from './components/MyProfile';
@@ -31,12 +31,12 @@ function App() {
                 </Route>
                 // Register page
                 <Route path="/register" component={RegisterForm} />
-                
                 // User tickets
                 <PrivateRoute path="/my" component={MyTickets} />
-
                 // Personal profile page
                 <PrivateRoute path="/profile" component={MyProfile} />
+                // Routes to login everytime
+                <Route component={LoginForm} />
             </Switch>
         </>
     );

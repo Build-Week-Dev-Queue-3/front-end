@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
-import { Button } from 'reactstrap';
 
-const MyProfile = (props) => {
+const EditProfile = (props) => {
     console.log('these are your props: ', props.you);
-    const you = JSON.parse(localStorage.getItem('you'));
+    const you = localStorage.getItem('you');
     const [editing, setEditing] = useState(false);
     const [profile, setProfile] = useState(you);
     const editProfile = () => {
@@ -28,8 +27,6 @@ const MyProfile = (props) => {
                 console.log('axios put :', res);
                 setEditing(!editing);
                 setProfile(res.data.user);
-                localStorage.removeItem('you');
-                localStorage.setItem('you', JSON.stringify(res.data.user));
             })
             .catch((err) => {
                 console.log(err);
@@ -37,34 +34,22 @@ const MyProfile = (props) => {
     };
 
     console.log(editing);
-
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col">
-                    <h2>My Profile</h2>
-                    <hr />
-                </div>
-            </div>
+        <section>
+            <h3>Welcome to your profile!</h3>
             {!editing ? (
-                <div className="row">
-                    <div className="col">
-                        <h3>{profile.name}</h3>
-                        <p>E-mail: {profile.email}</p>
-                        <p>Cohort: {profile.cohort}</p>
-                        <p>
-                            Status:
-                            {profile.student ? <li>Student</li> : null}
-                            {profile.helper ? <li>Helper</li> : null}
-                        </p>
-                        <Button
-                            className="btn btn-danger"
-                            onClick={editProfile}
-                        >
-                            Edit profile
-                        </Button>
-                    </div>
-                </div>
+                <>
+                    <ul>
+                        <li>Name: {profile.name} </li>
+                        <li>Email: {profile.email}</li>
+                        <li>Cohort: {profile.cohort} </li>
+                        <br />
+                        <h6>You are a: </h6>
+                        {profile.student ? <li>Student</li> : null}
+                        {profile.helper ? <li>Helper</li> : null}
+                    </ul>
+                    <button onClick={editProfile}>Edit your profile</button>
+                </>
             ) : (
                 <form onSubmit={handleSubmit}>
                     <label>
@@ -89,7 +74,7 @@ const MyProfile = (props) => {
                     <button>Submit</button>
                 </form>
             )}{' '}
-        </div>
+        </section>
     );
 };
-export default MyProfile;
+export default EditProfile;
