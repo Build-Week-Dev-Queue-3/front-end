@@ -3,8 +3,9 @@ import { authenticatedAxios } from '../../utils/authenticAxios';
 
 const EditProfile = (props) => {
     console.log('these are your props: ', props.you);
+    const you = localStorage.getItem('you');
     const [editing, setEditing] = useState(false);
-    const [profile, setProfile] = useState(props.you);
+    const [profile, setProfile] = useState(you);
     const editProfile = () => {
         setEditing(!editing);
     };
@@ -31,6 +32,8 @@ const EditProfile = (props) => {
                 console.log(err);
             });
     };
+
+    console.log(editing);
     return (
         <section>
             <h3>Welcome to your profile!</h3>
