@@ -86,6 +86,7 @@ export default function Ticket(props) {
             .then((res) => {
                 console.log(res);
                 props.getTickets();
+                setCurrentStatus({ status_id: '1' });
             })
             .catch((err) => {
                 console.log(err);
@@ -111,6 +112,7 @@ export default function Ticket(props) {
                                         name="status_id"
                                         onChange={handleStatus}
                                     >
+                                        <option label="Select a status" />
                                         <option value={1} label="Submitted" />
                                         <option value={2}>In Progress</option>
                                         <option value={3}>
