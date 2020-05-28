@@ -1,8 +1,11 @@
 import React from 'react';
 import './Ticket.css';
 
-export default function Ticket (props) {
-    const {id, subject, status, name, ticket_text} = props.queue;
+export default function Ticket(props) {
+    const { id, subject, status, name, ticket_text, user_id } = props.queue;
+    const you = JSON.parse(localStorage.getItem('you'));
+    console.log('user id', user_id);
+    console.log('your id', you.id);
 
     return (
         <div className="row ticket">
@@ -18,10 +21,15 @@ export default function Ticket (props) {
                     <div className="col ticket__content">
                         <h3>{subject}</h3>
                         <p>{ticket_text}</p>
-                        <div className="ticket__actions">
-                            <a href="#">Action</a>
-                            <a href="#" className="text-danger">Action</a>
-                        </div>
+
+                        {you.helper || you.id === user_id ? (
+                            <div className="ticket__actions">
+                                <a href="#">Edit</a>
+                                <a href="#" className="text-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             </div>

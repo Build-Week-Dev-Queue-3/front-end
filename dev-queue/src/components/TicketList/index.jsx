@@ -15,7 +15,7 @@ const TicketList = (props) => {
                 console.log(err);
             });
     }, []);
-    
+
     return (
         <div className="container">
             <div className="row">
@@ -23,7 +23,11 @@ const TicketList = (props) => {
                     <h2>All tickets: </h2>
                 </div>
             </div>
-            {tickets && tickets.map((queue, key) => <Ticket queue={queue} key={key} />)}
+            {tickets &&
+                tickets.map((queue, key) => {
+                    console.log(queue);
+                    return <Ticket queue={queue} key={key} />;
+                })}
         </div>
     );
 };
