@@ -79,7 +79,7 @@ export default function Ticket(props) {
             [e.target.name]: e.target.value,
         });
     };
-    const changeStatus = (e) => {
+    const submitStatusChange = (e) => {
         e.preventDefault();
         authenticatedAxios()
             .patch(`/tickets/${id}`, currentStatus)
@@ -99,6 +99,9 @@ export default function Ticket(props) {
             <div className="col">
                 <h2>{delMessage} </h2>
                 <div
+                    onClick={() => {
+                        push(`/tickets/${id}`);
+                    }}
                     className={
                         (status === 'submitted' &&
                             'row submitted ticket__container') ||
@@ -133,7 +136,9 @@ export default function Ticket(props) {
                                         <option value={4}>Completed</option>
                                     </select>
                                 </label>
-                                <button onClick={changeStatus}>Submit</button>
+                                <button onClick={submitStatusChange}>
+                                    Submit
+                                </button>
                             </form>
                         )}
                     </div>

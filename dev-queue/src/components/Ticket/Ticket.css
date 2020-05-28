@@ -10,7 +10,9 @@
 .ticket .ticket__container.completed {
     border-left: 10px solid #48c77b;
 }
-
+.ticket:hover {
+    box-shadow: 6px 1px rgb(133, 133, 133);
+}
 .ticket:last-child {
     margin-bottom: 60px;
 }
