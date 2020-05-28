@@ -16,6 +16,7 @@ export default function Ticket(props) {
     const [ticket, setTicket] = useState(initialTicket);
     const [delMessage, setDelMessage] = useState('');
     const edit = (e) => {
+        e.stopPropagation();
         e.preventDefault();
         setEditing(!editing);
         authenticatedAxios()
@@ -56,6 +57,8 @@ export default function Ticket(props) {
     const { push } = useHistory();
 
     const deletePost = (e) => {
+        e.stopPropagation();
+
         e.preventDefault();
         authenticatedAxios()
             .delete(`/tickets/${id}/user/${you.id}`)
