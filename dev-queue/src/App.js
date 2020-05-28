@@ -35,6 +35,8 @@ function App() {
                 <PrivateRoute path="/my" component={MyTickets} />
                 // Personal profile page
                 <PrivateRoute path="/profile" component={MyProfile} />
+                // Routes to login everytime
+                <Route component={LoginForm} />
             </Switch>
         </>
     );
