@@ -8,9 +8,12 @@ export default function Ticket(props) {
     const you = JSON.parse(localStorage.getItem('you'));
     console.log('user id', user_id);
     console.log('your id', you.id);
-
+    const initialTicket = {
+        subject: subject,
+        ticket_text: ticket_text,
+    };
     const [editing, setEditing] = useState(false);
-    const [ticket, setTicket] = useState(props.queue);
+    const [ticket, setTicket] = useState(initialTicket);
     const [delMessage, setDelMessage] = useState('');
     const edit = (e) => {
         e.preventDefault();
@@ -37,6 +40,7 @@ export default function Ticket(props) {
     };
 
     const handleEdit = (e) => {
+        setEditing(!editing);
         e.preventDefault();
         authenticatedAxios()
             .put(`tickets/${id}/user/${you.id}`, ticket)
@@ -66,6 +70,28 @@ export default function Ticket(props) {
             });
     };
     console.log('ticket', ticket);
+
+    const [currentStatus, setCurrentStatus] = useState(1);
+    const handleStatus = (e) => {
+        e.persist();
+        setCurrentStatus({
+            ...currentStatus,
+            [e.target.name]: e.target.value,
+        });
+    };
+    const changeStatus = (e) => {
+        e.preventDefault();
+        authenticatedAxios()
+            .patch(`/tickets/${id}`, currentStatus)
+            .then((res) => {
+                console.log(res);
+                props.getTickets();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    console.log('currentStatus', currentStatus);
     return (
         <div className="row ticket">
             <div className="col">
@@ -79,24 +105,21 @@ export default function Ticket(props) {
                         <p className="ticket__status">{status}</p>
                         {you.helper && (
                             <form>
-                                <label htmlFor={'ticket__status'}>
+                                <label htmlFor={'status_id'}>
                                     Set Status:{' '}
-                                    <select name="ticket__status">
-                                        <option name="submited">
-                                            Submitted
-                                        </option>
-                                        <option name="in progress">
-                                            In Progress
-                                        </option>
-                                        <option name="returned to queue">
+                                    <select
+                                        name="status_id"
+                                        onChange={handleStatus}
+                                    >
+                                        <option value={1} label="Submitted" />
+                                        <option value={2}>In Progress</option>
+                                        <option value={3}>
                                             Return to Queue
                                         </option>
-                                        <option name="completed">
-                                            Completed
-                                        </option>
+                                        <option value={4}>Completed</option>
                                     </select>
                                 </label>
-                                <button>Submit</button>
+                                <button onClick={changeStatus}>Submit</button>
                             </form>
                         )}
                     </div>
