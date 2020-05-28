@@ -77,6 +77,28 @@ export default function Ticket(props) {
 
                         <h5>Status:</h5>
                         <p className="ticket__status">{status}</p>
+                        {you.helper && (
+                            <form>
+                                <label htmlFor={'ticket__status'}>
+                                    Set Status:{' '}
+                                    <select name="ticket__status">
+                                        <option name="submited">
+                                            Submitted
+                                        </option>
+                                        <option name="in progress">
+                                            In Progress
+                                        </option>
+                                        <option name="returned to queue">
+                                            Return to Queue
+                                        </option>
+                                        <option name="completed">
+                                            Completed
+                                        </option>
+                                    </select>
+                                </label>
+                                <button>Submit</button>
+                            </form>
+                        )}
                     </div>
                     <div className="col ticket__content">
                         {editing ? (
