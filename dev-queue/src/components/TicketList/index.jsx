@@ -4,8 +4,7 @@ import Ticket from '../Ticket';
 
 const TicketList = (props) => {
     const [tickets, setTickets] = useState();
-
-    useEffect(() => {
+    const getTickets = () => {
         authenticatedAxios()
             .get('tickets')
             .then((res) => {
@@ -14,6 +13,9 @@ const TicketList = (props) => {
             .catch((err) => {
                 console.log(err);
             });
+    };
+    useEffect(() => {
+        getTickets();
     }, []);
 
     return (
@@ -25,8 +27,14 @@ const TicketList = (props) => {
             </div>
             {tickets &&
                 tickets.map((queue, key) => {
-                    console.log(queue);
-                    return <Ticket queue={queue} key={key} />;
+                    // console.log(queue);
+                    return (
+                        <Ticket
+                            queue={queue}
+                            getTickets={getTickets}
+                            key={key}
+                        />
+                    );
                 })}
         </div>
     );
