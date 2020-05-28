@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 export default function Ticket(props) {
     const { id, subject, status, name, ticket_text, user_id } = props.queue;
     const you = JSON.parse(localStorage.getItem('you'));
-    console.log('user id', user_id);
-    console.log('your id', you.id);
+    // console.log('user id', user_id);
+    // console.log('your id', you.id);
     const initialTicket = {
         subject: subject,
         ticket_text: ticket_text,
@@ -28,8 +28,8 @@ export default function Ticket(props) {
             });
     };
 
-    console.log(editing);
-    console.log(props.queue);
+    // console.log(editing);
+    // console.log(props.queue);
     const handleChanges = (e) => {
         e.persist();
         setTicket({
@@ -60,7 +60,7 @@ export default function Ticket(props) {
         authenticatedAxios()
             .delete(`/tickets/${id}/user/${you.id}`)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setDelMessage(res.data.message);
                 props.getTickets();
                 push('/');
@@ -69,7 +69,7 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log('ticket', ticket);
+    // console.log('ticket', ticket);
 
     const [currentStatus, setCurrentStatus] = useState(1);
     const handleStatus = (e) => {
@@ -84,7 +84,7 @@ export default function Ticket(props) {
         authenticatedAxios()
             .patch(`/tickets/${id}`, currentStatus)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 props.getTickets();
                 setCurrentStatus({ status_id: '1' });
             })
@@ -92,12 +92,18 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log('currentStatus', currentStatus);
+    console.log('status yoooo', status);
     return (
         <div className="row ticket">
             <div className="col">
                 <h2>{delMessage} </h2>
-                <div className="row ticket__container">
+                <div
+                    className={
+                        status === 'sumbitted'
+                            ? 'sumbitted'
+                            : 'row ticket__container submitted'
+                    }
+                >
                     <div className="col-lg-3 ticket__info">
                         <h5>Author:</h5>
                         <p>{name}</p>

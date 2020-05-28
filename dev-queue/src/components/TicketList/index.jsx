@@ -27,7 +27,7 @@ const TicketList = (props) => {
             </div>
             {tickets &&
                 tickets.map((queue, key) => {
-                    console.log(queue);
+                    // console.log(queue);
                     return (
                         <Ticket
                             queue={queue}
