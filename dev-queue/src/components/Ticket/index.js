@@ -4,7 +4,6 @@ import { authenticatedAxios } from '../../utils/authenticAxios';
 
 export default function Ticket(props) {
     const { id, subject, status, name, ticket_text, user_id } = props.queue;
-    console.log(props.queue);
     const you = JSON.parse(localStorage.getItem('you'));
     console.log('user id', user_id);
     console.log('your id', you.id);

@@ -3,6 +3,7 @@ import ticketDetailsSchema from './ticketDetailsSchema';
 import Ticket from '../Ticket';
 import { useParams } from 'react-router-dom';
 import { authenticatedAxios } from '../../utils/authenticAxios';
+import CommentForm from '../CommentForm'
 
 import {
     Form,
@@ -35,6 +36,12 @@ export default function TicketDetails (props) {
             {currentTicket &&
                 <Ticket queue={currentTicket} />
             }
+            <div className="row">
+                <div className="col">
+                    <h2>Comments</h2>
+                </div>
+            </div>
+            <CommentForm ticketId={ticketId} />
         </div>
     );
 }
