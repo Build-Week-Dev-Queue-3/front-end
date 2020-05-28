@@ -37,13 +37,13 @@ const EditProfile = (props) => {
             {!editing ? (
                 <>
                     <ul>
-                        <li>Name: {props.you.name} </li>
-                        <li>Email: {props.you.email}</li>
-                        <li>Cohort: {props.you.cohort} </li>
+                        <li>Name: {profile.name} </li>
+                        <li>Email: {profile.email}</li>
+                        <li>Cohort: {profile.cohort} </li>
                         <br />
                         <h6>You are a: </h6>
-                        {props.you.student ? <li>Student</li> : null}
-                        {props.you.helper ? <li>Helper</li> : null}
+                        {profile.student ? <li>Student</li> : null}
+                        {profile.helper ? <li>Helper</li> : null}
                     </ul>
                     <button onClick={editProfile}>Edit your profile</button>
                 </>
