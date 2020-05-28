@@ -92,16 +92,22 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log('status yoooo', status);
+    console.log(ticket);
+    console.log(status);
     return (
         <div className="row ticket">
             <div className="col">
                 <h2>{delMessage} </h2>
                 <div
                     className={
-                        status === 'sumbitted'
-                            ? 'sumbitted'
-                            : 'row ticket__container submitted'
+                        (status === 'submitted' &&
+                            'row submitted ticket__container') ||
+                        (status === 'in progress' &&
+                            'row inProgress ticket__container') ||
+                        (status === 'complete' &&
+                            'row completed ticket__container') ||
+                        (status === 'returned to queue' &&
+                            'row returnedToQueue ticket__container')
                     }
                 >
                     <div className="col-lg-3 ticket__info">
