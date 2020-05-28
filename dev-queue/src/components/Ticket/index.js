@@ -94,7 +94,7 @@ export default function Ticket(props) {
                                 <p>{ticket_text}</p>
                             </>
                         )}
-                        {you.id === user_id
+                        {you.id === user_id || !user_id
                             ? !editing && (
                                   <div className="ticket__actions">
                                       <a href="#" onClick={edit}>
