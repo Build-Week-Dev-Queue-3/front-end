@@ -10,7 +10,7 @@ export default function Ticket(props) {
 
     const [editing, setEditing] = useState(false);
     const [ticket, setTicket] = useState(props.queue);
-
+    const [delMessage, setDelMessage] = useState('');
     const edit = (e) => {
         e.preventDefault();
         setEditing(!editing);
@@ -36,12 +36,25 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
+    const deletePost = (e) => {
+        e.preventDefault();
+        authenticatedAxios()
+            .delete(`/tickets/${id}/user/${you.id}`)
+            .then((res) => {
+                console.log(res);
+                setDelMessage(res.data.message);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     console.log(ticket);
     return (
         <div className="row ticket">
             <div className="col">
                 <div className="row ticket__container">
                     <div className="col-lg-3 ticket__info">
+                        {delMessage}
                         <h5>Author:</h5>
                         <p>{name}</p>
 
@@ -83,7 +96,11 @@ export default function Ticket(props) {
                                       <a href="#" onClick={edit}>
                                           Edit
                                       </a>
-                                      <a href="#" className="text-danger">
+                                      <a
+                                          href="#"
+                                          onClick={deletePost}
+                                          className="text-danger"
+                                      >
                                           Delete
                                       </a>
                                   </div>
