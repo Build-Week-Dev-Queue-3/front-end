@@ -28,6 +28,8 @@ const MyProfile = (props) => {
                 console.log('axios put :', res);
                 setEditing(!editing);
                 setProfile(res.data.user);
+                localStorage.removeItem('you');
+                localStorage.setItem('you', JSON.stringify(res.data.user));
             })
             .catch((err) => {
                 console.log(err);

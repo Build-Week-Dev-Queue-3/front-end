@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 
 import './Register.css';
-import { Form, FormGroup, Input, Label, Button, UncontrolledAlert } from 'reactstrap';
-import registerFormSchema from "./registerFormSchema";
-
+import {
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Button,
+    UncontrolledAlert,
+} from 'reactstrap';
+import registerFormSchema from './registerFormSchema';
 
 export default function RegisterForm(props) {
+    const { push } = useHistory();
     const initialErrors = {
         name: '',
         email: '',
         password: '',
         cohort: '',
         helper: '',
-        student: ''
+        student: '',
     };
 
     const initialFormData = {
@@ -34,11 +41,10 @@ export default function RegisterForm(props) {
     let [disabled, setDisabled] = useState(true);
 
     function updateFormData(key, value) {
-        setFormData({...formData, [key]: value});
+        setFormData({ ...formData, [key]: value });
     }
 
-    function inputOnChangeHandler (event) {
-
+    function inputOnChangeHandler(event) {
         const element = event.target;
 
         if (element.getAttribute('type') === 'checkbox') {
@@ -53,89 +59,118 @@ export default function RegisterForm(props) {
 
         yup.reach(registerFormSchema, element.name)
             .validate(formData[element.name])
-            .then(valid => {
-                setErrors({...errors, [element.name]: ''});
+            .then((valid) => {
+                setErrors({ ...errors, [element.name]: '' });
             })
-            .catch(err => {
-                setErrors({...errors, [element.name]: err.errors[0]});
+            .catch((err) => {
+                setErrors({ ...errors, [element.name]: err.errors[0] });
             });
-    
     }
 
     useEffect(() => {
-        registerFormSchema.isValid(formData)
-            .then((valid) => {
-                if (valid) {
-                    setDisabled(false);
-                    setErrors(initialErrors);
-                } else {
-                    setDisabled(true);
-                }
-            });
+        registerFormSchema.isValid(formData).then((valid) => {
+            if (valid) {
+                setDisabled(false);
+                setErrors(initialErrors);
+            } else {
+                setDisabled(true);
+            }
+        });
     }, [formData]);
 
     function onSubmitHandler(event) {
         event.preventDefault();
 
-        axios.post(REGISTER_URL, formData)
+        axios
+            .post(REGISTER_URL, formData)
             .then((response) => {
                 console.log(response);
+                push('/login');
             })
             .catch((error) => console.log(error));
     }
-    
 
     return (
         <div className="register container">
-            {
-                Object.keys(errors).map((item, key) => {
-                    if (errors[item]) {
-                        return (
-                            <div className="row" key={key}>
-                                <div className="col">
-                                    <UncontrolledAlert color="danger">
-                                        {errors[item]}
-                                    </UncontrolledAlert>
-                                </div>
+            {Object.keys(errors).map((item, key) => {
+                if (errors[item]) {
+                    return (
+                        <div className="row" key={key}>
+                            <div className="col">
+                                <UncontrolledAlert color="danger">
+                                    {errors[item]}
+                                </UncontrolledAlert>
                             </div>
-                        );
-                    }
-                })
-            }
+                        </div>
+                    );
+                }
+            })}
             <div className="row">
                 <div className="col-lg-6">
                     <Form autoComplete="off">
                         <h2>New Account</h2>
                         <FormGroup>
                             <Label>Name:</Label>
-                            <Input type="text" name="name" onChange={inputOnChangeHandler}/>
+                            <Input
+                                type="text"
+                                name="name"
+                                onChange={inputOnChangeHandler}
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>E-mail:</Label>
-                            <Input type="email" name="email" onChange={inputOnChangeHandler} />
+                            <Input
+                                type="email"
+                                name="email"
+                                onChange={inputOnChangeHandler}
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>Password:</Label>
-                            <Input type="password" name="password" onChange={inputOnChangeHandler} />
+                            <Input
+                                type="password"
+                                name="password"
+                                onChange={inputOnChangeHandler}
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>Cohort:</Label>
-                            <Input type="text" name="cohort" onChange={inputOnChangeHandler} />
+                            <Input
+                                type="text"
+                                name="cohort"
+                                onChange={inputOnChangeHandler}
+                            />
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                                <Input type="checkbox" id="helper" name="helper" onChange={inputOnChangeHandler} />{' '}
+                                <Input
+                                    type="checkbox"
+                                    id="helper"
+                                    name="helper"
+                                    onChange={inputOnChangeHandler}
+                                />{' '}
                                 Helper
                             </Label>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                                <Input type="checkbox" id="student" name="student" onChange={inputOnChangeHandler} />{' '}
+                                <Input
+                                    type="checkbox"
+                                    id="student"
+                                    name="student"
+                                    onChange={inputOnChangeHandler}
+                                />{' '}
                                 Student
                             </Label>
                         </FormGroup>
                         <FormGroup>
-                            <Button disabled={disabled} onClick={onSubmitHandler} className="btn btn-danger">Register</Button>
+                            <Button
+                                disabled={disabled}
+                                onClick={onSubmitHandler}
+                                className="btn btn-danger"
+                            >
+                                Register
+                            </Button>
                         </FormGroup>
                     </Form>
                     Already have an account? <Link to="/login">Log In</Link>
