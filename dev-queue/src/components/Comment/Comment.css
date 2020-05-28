@@ -1,0 +1,13 @@
+div.comment {
+    margin-top: 30px;
+}
+
+div.comment__container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+div.comment p:last-child {
+    margin-bottom: 0;
+}
