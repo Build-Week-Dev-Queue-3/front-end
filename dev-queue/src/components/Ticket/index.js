@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Ticket.css';
 import { authenticatedAxios } from '../../utils/authenticAxios';
+import { useHistory } from 'react-router-dom';
 
 export default function Ticket(props) {
     const { id, subject, status, name, ticket_text, user_id } = props.queue;
@@ -36,6 +37,7 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
+    const { push } = useHistory();
     const deletePost = (e) => {
         e.preventDefault();
         authenticatedAxios()
@@ -43,6 +45,8 @@ export default function Ticket(props) {
             .then((res) => {
                 console.log(res);
                 setDelMessage(res.data.message);
+                props.getTickets();
+                push('/');
             })
             .catch((err) => {
                 console.log(err);
@@ -52,9 +56,9 @@ export default function Ticket(props) {
     return (
         <div className="row ticket">
             <div className="col">
+                <h2>{delMessage} </h2>
                 <div className="row ticket__container">
                     <div className="col-lg-3 ticket__info">
-                        {delMessage}
                         <h5>Author:</h5>
                         <p>{name}</p>
 
