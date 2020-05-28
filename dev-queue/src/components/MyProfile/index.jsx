@@ -5,8 +5,8 @@ import { Button } from 'reactstrap';
 const MyProfile = (props) => {
     console.log('these are your props: ', props.you);
     const you = JSON.parse(localStorage.getItem('you'));
-    const [editing, setEditing] = useState(false);
     const [profile, setProfile] = useState(you);
+    const [editing, setEditing] = useState(false);
     const editProfile = () => {
         setEditing(!editing);
     };
@@ -66,7 +66,7 @@ const MyProfile = (props) => {
                     </div>
                 </div>
             ) : (
-                <form onSubmit={handleSubmit}>
+                <form>
                     <label>
                         Name:{' '}
                         <input
@@ -85,7 +85,7 @@ const MyProfile = (props) => {
                             onChange={handleChanges}
                         />
                     </label>{' '}
-                    <button onClick={editProfile}>Cancel</button>
+                    <button onClick={editing}>Cancel</button>
                     <button>Submit</button>
                 </form>
             )}{' '}
