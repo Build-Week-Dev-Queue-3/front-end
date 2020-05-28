@@ -13,7 +13,7 @@ import commentFormSchema from './commentFormSchema';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 
 export default function CommentForm(props) {
-    const { ticketId } = props;
+    const { ticketId, loadTicket } = props;
 
     const initialErrors = {comment: ''};
     const initialFormData = {comment: ''};
@@ -60,7 +60,8 @@ export default function CommentForm(props) {
         authenticatedAxios()
             .post(`/tickets/${ticketId}/comments`, formData)
             .then((response) => {
-                console.log(response);
+                loadTicket();
+                setFormData(initialFormData);
             })
             .catch((error) => console.log(error));
     }
@@ -85,7 +86,7 @@ export default function CommentForm(props) {
                     <Form autoComplete="off">
                         <h3>New Comment</h3>
                         <FormGroup>
-                            <Input type="textarea" name="comment" onChange={inputOnChangeHandler} rows="5" />
+                            <Input type="textarea" name="comment" onChange={inputOnChangeHandler} value={formData.comment} rows="5" />
                         </FormGroup>
                         
                         <FormGroup>

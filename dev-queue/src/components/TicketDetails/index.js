@@ -4,6 +4,8 @@ import Ticket from '../Ticket';
 import { useParams } from 'react-router-dom';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 import CommentForm from '../CommentForm'
+import Comment from '../Comment'
+import './TicketDetails.css';
 
 import {
     Form,
@@ -19,7 +21,7 @@ export default function TicketDetails (props) {
 
     const [currentTicket, setCurrentTicket] = useState();
 
-    useEffect(() => {
+    function loadTicket () {
         authenticatedAxios()
             .get(`tickets/${ticketId}`)
             .then((res) => {
@@ -28,6 +30,10 @@ export default function TicketDetails (props) {
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    useEffect(() => {
+        loadTicket();
     }, []);
 
 
@@ -36,12 +42,18 @@ export default function TicketDetails (props) {
             {currentTicket &&
                 <Ticket queue={currentTicket} />
             }
-            <div className="row">
-                <div className="col">
-                    <h2>Comments</h2>
+            <div className="comments">
+                <div className="row">
+                    <div className="col">
+                        <h2>Comments</h2>
+                    </div>
                 </div>
+                {currentTicket && currentTicket.comments.map((commentData, key) => {
+                    return <Comment commentData={commentData} key="key" />
+                })}
             </div>
-            <CommentForm ticketId={ticketId} />
+
+            <CommentForm ticketId={ticketId} loadTicket={loadTicket} />
         </div>
     );
 }
