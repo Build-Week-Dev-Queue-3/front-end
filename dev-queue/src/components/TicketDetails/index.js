@@ -49,7 +49,7 @@ export default function TicketDetails (props) {
                     </div>
                 </div>
                 {currentTicket && currentTicket.comments.map((commentData, key) => {
-                    return <Comment commentData={commentData} key="key" />
+                    return <Comment commentData={commentData} ticket={currentTicket} loadTicket={loadTicket} key="key" />
                 })}
             </div>
 
