@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Dashboard from './components/dev/Dashboard';
+import Dashboard from './components/TicketList';
 import AddTicket from './components/AddTicket/AddTicket';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
@@ -10,19 +10,19 @@ import Header from './components/header';
 import RegisterForm from './components/register';
 import LoginForm from './components/login';
 import MyTickets from './components/MyTickets/MyTickets';
-import RealDashboard from './components/dev/RealDashboard';
+import TicketList from './components/TicketList';
+import MyProfile from './components/MyProfile';
 
 function App() {
     const token = localStorage.getItem('token');
     const [loggedIn, setLoggedIn] = useState(token && true);
-    const you = localStorage.getItem('you');
 
     return (
         <>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <Switch>
                 // Dashboard
-                <PrivateRoute exact path="/" component={RealDashboard} />
+                <PrivateRoute exact path="/" component={TicketList} />
                 // Add Ticket
                 <PrivateRoute path="/create" component={AddTicket} />
                 // Login page
@@ -31,8 +31,10 @@ function App() {
                 </Route>
                 // Register page
                 <Route path="/register" component={RegisterForm} />
-                <PrivateRoute path="/all" component={Dashboard} />
+                // User tickets
                 <PrivateRoute path="/my" component={MyTickets} />
+                // Personal profile page
+                <PrivateRoute path="/profile" component={MyProfile} />
             </Switch>
         </>
     );

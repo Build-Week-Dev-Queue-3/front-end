@@ -1,6 +1,6 @@
 import React from 'react';
-import Dashboard from './Dashboard';
-import EditProfile from '../EditProfile/EditProfile';
+import TicketList from './index';
+import EditProfile from '../MyProfile';
 
 const RealDashboard = () => {
     const you = JSON.parse(localStorage.getItem('you'));
@@ -15,7 +15,7 @@ const RealDashboard = () => {
             </div>
             <div>
                 <br />
-                <Dashboard />
+                <TicketList />
             </div>
         </section>
     );
