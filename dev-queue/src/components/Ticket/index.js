@@ -24,7 +24,6 @@ export default function Ticket(props) {
         setEditing(!editing);
     };
 
-    // console.log(editing);
     console.log(props);
     const handleChanges = (e) => {
         e.persist();
@@ -77,8 +76,6 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    // console.log('ticket', ticket);
-    // console.log('props  : ', props);
 
     const [currentStatus, setCurrentStatus] = useState(1);
     const handleStatus = (e) => {
@@ -101,8 +98,6 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    // console.log('ticket', ticket);
-    // console.log(status);
     return (
         <div className="row ticket">
             <div className="col">

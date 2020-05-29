@@ -26,7 +26,7 @@ const MyTickets = (props) => {
                     <h2>My tickets: </h2>
                 </div>
             </div>
-            {!props.dataArray && <h2>Loading Please Wait...</h2>}
+            {props.dataArray && <h2>Loading Please Wait...</h2>}
             {props.dataArray &&
                 props.dataArray.data.map((queue, key) => {
                     if (userId == queue.user_id) {

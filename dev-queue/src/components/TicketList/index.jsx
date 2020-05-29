@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 import Ticket from '../Ticket';
+import { connect } from 'react-redux';
+import { fetchData, getTickets } from '../../store/actions';
 
 const TicketList = (props) => {
-    const [tickets, setTickets] = useState();
-    const getTickets = () => {
-        authenticatedAxios()
-            .get('tickets')
-            .then((res) => {
-                setTickets(res.data.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    console.log('ticketlist props: ', props);
     useEffect(() => {
-        getTickets();
+        props.fetchData('tickets');
     }, []);
 
     return (
@@ -25,14 +17,16 @@ const TicketList = (props) => {
                     <h2>All tickets: </h2>
                 </div>
             </div>
-            {!tickets && <h2>Loading Please Wait...</h2>}
-            {tickets &&
-                tickets.map((queue, key) => {
+            {!props.dataArray && <h2>Loading Please Wait...</h2>}
+            {props.dataArray &&
+                props.dataArray.data.map((queue, key) => {
                     // console.log(queue);
                     return (
                         <Ticket
                             queue={queue}
-                            getTickets={getTickets}
+                            getTickets={() => {
+                                props.fetchData('tickets');
+                            }}
                             key={key}
                         />
                     );
@@ -40,5 +34,13 @@ const TicketList = (props) => {
         </div>
     );
 };
+const mapStateToProps = (state) => {
+    console.log('TicketList mSTP: ', state);
+    return {
+        isFetching: state.dataFetchReducer.isFetching,
+        error: state.dataFetchReducer.error,
+        dataArray: state.dataFetchReducer.dataArray,
+    };
+};
 
-export default TicketList;
+export default connect(mapStateToProps, { fetchData })(TicketList);
