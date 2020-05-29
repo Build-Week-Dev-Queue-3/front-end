@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.css';
-import { Button } from 'reactstrap';
 
 export default function Header(props) {
     const { push } = useHistory();
@@ -34,16 +33,31 @@ export default function Header(props) {
                                 </Link>
                             ) : (
                                 <>
-                                    <Link
-                                        className="header__nav-link"
-                                        to="/"
-                                    >
+                                    <Link className="header__nav-link" to="/">
                                         All Tickets
                                     </Link>
-                                    <Link className="header__nav-link" to="/my">My Tickets</Link>
-                                    <Link className="header__nav-link" to="/profile">My Profile</Link>
-                                    <Link className="header__nav-link" to="/create">Create a Ticket</Link>
-                                    <a href="#" className="header__nav-link header__nav-link--right" onClick={logOut}>Log Out</a>
+                                    <Link className="header__nav-link" to="/my">
+                                        My Tickets
+                                    </Link>
+                                    <Link
+                                        className="header__nav-link"
+                                        to="/profile"
+                                    >
+                                        My Profile
+                                    </Link>
+                                    <Link
+                                        className="header__nav-link"
+                                        to="/create"
+                                    >
+                                        Create a Ticket
+                                    </Link>
+                                    <a
+                                        href="#"
+                                        className="header__nav-link header__nav-link--right"
+                                        onClick={logOut}
+                                    >
+                                        Log Out
+                                    </a>
                                 </>
                             )}
                         </nav>

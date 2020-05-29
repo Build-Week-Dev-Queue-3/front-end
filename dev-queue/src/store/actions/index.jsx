@@ -25,12 +25,3 @@ export const fetchData = (link) => {
             });
     };
 };
-
-export const LOGGING_IN = 'LOGGING_IN';
-export const LOGGING_OUT = 'LOGGING_OUT';
-
-export const logInState = () => {
-    return (dispatch) => {
-        dispatch({ type: LOGGING_IN });
-    };
-};

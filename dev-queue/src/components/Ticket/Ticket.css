@@ -1,20 +1,20 @@
-.ticket .ticket__container {
+.ticket .ticket__container.submitted {
+    border-left: 10px solid #007aff;
+}
+.ticket .ticket__container.inProgress {
+    border-left: 10px solid rgb(255, 238, 0);
+}
+.ticket .ticket__container.returnedToQueue {
+    border-left: 10px solid #ff6332;
+}
+.ticket .ticket__container.completed {
     border-left: 10px solid #48c77b;
+}
+.ticket:hover {
+    box-shadow: 6px 1px rgb(133, 133, 133);
 }
 .ticket:last-child {
     margin-bottom: 60px;
-}
-.submitted .ticket__container {
-    border-left: 10px solid #007aff;
-}
-.inProgress {
-    border-color: rgb(255, 238, 0);
-}
-.returnedToQueue {
-    border-color: #ff6332;
-}
-.completed {
-    border-color: #48c77b;
 }
 /* .ticket:nth-child(3n + 3) .ticket__container {
     border-color: #ff6332;
