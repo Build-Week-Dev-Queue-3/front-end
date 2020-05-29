@@ -40,7 +40,7 @@ export default function Comment(props) {
             <div className="col comment__container">
                 <h4>{name}</h4>
                 <p>{comment}</p>
-                {isMyComment() && (
+                {/* {isMyComment() && (
                     <p>
                         <a
                             href=""
@@ -50,7 +50,7 @@ export default function Comment(props) {
                             Delete
                         </a>
                     </p>
-                )}
+                )} */}
             </div>
         </div>
     );
