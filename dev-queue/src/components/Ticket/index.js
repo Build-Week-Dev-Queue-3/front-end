@@ -16,7 +16,6 @@ export default function Ticket(props) {
     const [ticket, setTicket] = useState(initialTicket);
     const [delMessage, setDelMessage] = useState('');
     const edit = (e) => {
-        e.stopPropagation();
         e.preventDefault();
         setEditing(!editing);
         authenticatedAxios()
@@ -42,15 +41,13 @@ export default function Ticket(props) {
 
     const handleEdit = (e) => {
         setEditing(!editing);
-        e.stopPropagation();
         props.getTickets();
-
-        e.preventDefault();
         authenticatedAxios()
             .put(`tickets/${id}/user/${you.id}`, ticket)
             .then((res) => {
                 console.log(res);
                 edit();
+                setTicket(res.data.ticket);
             })
             .catch((err) => {
                 console.log(err);

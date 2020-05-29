@@ -10,19 +10,23 @@ const userId = localStorage.getItem('userId');
 // console.log(userId);
 
 const MyTickets = (props) => {
-    const [myTickets, setMyTickets] = useState();
-    console.log(props);
+    const [allTickets, setAllTickets] = useState();
+    console.log('props', props);
+    // useEffect(() => {
+    //     authenticatedAxios()
+    //         .get(`tickets/users/${userId}`)
+    //         .then((res) => {
+    //             setMyTickets(res.data.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
     useEffect(() => {
-        authenticatedAxios()
-            .get(`tickets/users/${userId}`)
-            .then((res) => {
-                setMyTickets(res.data.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        props.fetchData(`tickets/users/${userId}`);
     }, []);
-    console.log('myTickets', myTickets);
+
+    console.log('myTickets', props.dataArray);
     return (
         <div className="container">
             <div className="row">
@@ -30,9 +34,15 @@ const MyTickets = (props) => {
                     <h2>My tickets: </h2>
                 </div>
             </div>
-            {myTickets &&
-                myTickets.map((queue, key) => (
-                    <Ticket queue={queue} key={key} />
+            {props.dataArray &&
+                props.dataArray.data.map((queue, key) => (
+                    <Ticket
+                        queue={queue}
+                        key={key}
+                        getTickets={() => {
+                            props.fetchData(`tickets/users/${userId}`);
+                        }}
+                    />
                 ))}
         </div>
     );
