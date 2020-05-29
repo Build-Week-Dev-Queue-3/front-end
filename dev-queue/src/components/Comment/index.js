@@ -1,7 +1,6 @@
 import React from 'react';
 import './Comment.css';
 import { authenticatedAxios } from '../../utils/authenticAxios';
-import Axios from 'axios';
 
 export default function Comment(props) {
     const { comment, name } = props.commentData;
@@ -44,7 +43,7 @@ export default function Comment(props) {
                 {isMyComment() && (
                     <p>
                         <a
-                            href="#"
+                            href=""
                             className="text-danger"
                             onClick={deleteCommentHandler}
                         >

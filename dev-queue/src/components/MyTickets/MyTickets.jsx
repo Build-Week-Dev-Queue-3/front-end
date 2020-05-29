@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { authenticatedAxios } from '../../utils/authenticAxios';
+import { connect } from 'react-redux';
+import { fetchData } from '../../store/actions';
+
 import Ticket from '../Ticket';
 
 const userId = localStorage.getItem('userId');
 
 // console.log(userId);
 
-const MyTickets = () => {
+const MyTickets = (props) => {
     const [myTickets, setMyTickets] = useState();
-
+    console.log(props);
     useEffect(() => {
         authenticatedAxios()
             .get(`tickets/users/${userId}`)
@@ -34,4 +37,12 @@ const MyTickets = () => {
         </div>
     );
 };
-export default MyTickets;
+const mapStateToProps = (state) => {
+    console.log('DisplayedData mSTP: ', state);
+    return {
+        isFetching: state.dataFetchReducer.isFetching,
+        error: state.dataFetchReducer.error,
+        dataArray: state.dataFetchReducer.dataArray,
+    };
+};
+export default connect(mapStateToProps, { fetchData })(MyTickets);

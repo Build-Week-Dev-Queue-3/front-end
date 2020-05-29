@@ -42,6 +42,9 @@ export default function Ticket(props) {
 
     const handleEdit = (e) => {
         setEditing(!editing);
+        e.stopPropagation();
+        props.getTickets();
+
         e.preventDefault();
         authenticatedAxios()
             .put(`tickets/${id}/user/${you.id}`, ticket)
@@ -57,8 +60,6 @@ export default function Ticket(props) {
     const { push } = useHistory();
 
     const deletePost = (e) => {
-        e.stopPropagation();
-
         e.preventDefault();
         authenticatedAxios()
             .delete(`/tickets/${id}/user/${you.id}`)
@@ -73,6 +74,7 @@ export default function Ticket(props) {
             });
     };
     // console.log('ticket', ticket);
+    console.log('props  : ', props);
 
     const [currentStatus, setCurrentStatus] = useState(1);
     const handleStatus = (e) => {
@@ -95,16 +97,13 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log(ticket);
+    console.log('ticket', ticket);
     console.log(status);
     return (
         <div className="row ticket">
             <div className="col">
                 <h2>{delMessage} </h2>
                 <div
-                    onClick={() => {
-                        push(`/tickets/${id}`);
-                    }}
                     className={
                         (status === 'submitted' &&
                             'row submitted ticket__container') ||
@@ -119,7 +118,6 @@ export default function Ticket(props) {
                     <div className="col-lg-3 ticket__info">
                         <h5>Author:</h5>
                         <p>{name}</p>
-
                         <h5>Status:</h5>
                         <p className="ticket__status">{status}</p>
                         {you.helper && (
@@ -144,6 +142,18 @@ export default function Ticket(props) {
                                 </button>
                             </form>
                         )}
+                        {id && (
+                            <div className="ticket__actions">
+                                <a
+                                    href=""
+                                    onClick={() => {
+                                        push(`/tickets/${id}`);
+                                    }}
+                                >
+                                    View more info
+                                </a>
+                            </div>
+                        )}{' '}
                     </div>
                     <div className="col ticket__content">
                         {editing ? (
