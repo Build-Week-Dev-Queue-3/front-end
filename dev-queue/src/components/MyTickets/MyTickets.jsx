@@ -10,7 +10,6 @@ const userId = localStorage.getItem('userId');
 // console.log(userId);
 
 const MyTickets = (props) => {
-    const [allTickets, setAllTickets] = useState();
     console.log('props', props);
     // useEffect(() => {
     //     authenticatedAxios()
@@ -23,10 +22,19 @@ const MyTickets = (props) => {
     //         });
     // }, []);
     useEffect(() => {
-        props.fetchData(`tickets/users/${userId}`);
+        props.fetchData(`tickets`);
     }, []);
 
     console.log('myTickets', props.dataArray);
+    console.log(userId);
+    {
+        props.dataArray &&
+            props.dataArray.data.map((value) => {
+                if (userId == value.user_id) {
+                    console.log('yooo', value);
+                }
+            });
+    }
     return (
         <div className="container">
             <div className="row">
@@ -35,15 +43,19 @@ const MyTickets = (props) => {
                 </div>
             </div>
             {props.dataArray &&
-                props.dataArray.data.map((queue, key) => (
-                    <Ticket
-                        queue={queue}
-                        key={key}
-                        getTickets={() => {
-                            props.fetchData(`tickets/users/${userId}`);
-                        }}
-                    />
-                ))}
+                props.dataArray.data.map((queue, key) => {
+                    if (userId == queue.user_id) {
+                        return (
+                            <Ticket
+                                queue={queue}
+                                key={key}
+                                getTickets={(e) => {
+                                    props.fetchData('tickets');
+                                }}
+                            />
+                        );
+                    }
+                })}
         </div>
     );
 };

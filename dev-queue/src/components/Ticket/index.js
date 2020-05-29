@@ -15,21 +15,17 @@ export default function Ticket(props) {
     const [editing, setEditing] = useState(false);
     const [ticket, setTicket] = useState(initialTicket);
     const [delMessage, setDelMessage] = useState('');
+    const [editMessage, setEditMessage] = useState('');
+
     const edit = (e) => {
-        e.preventDefault();
+        {
+            !editing && e.preventDefault();
+        }
         setEditing(!editing);
-        authenticatedAxios()
-            .get('users')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     };
 
     // console.log(editing);
-    // console.log(props.queue);
+    console.log(props);
     const handleChanges = (e) => {
         e.persist();
         setTicket({
@@ -40,14 +36,23 @@ export default function Ticket(props) {
     };
 
     const handleEdit = (e) => {
+        e.preventDefault();
         setEditing(!editing);
         props.getTickets();
         authenticatedAxios()
             .put(`tickets/${id}/user/${you.id}`, ticket)
             .then((res) => {
                 console.log(res);
-                edit();
-                setTicket(res.data.ticket);
+                {
+                    res.data.ticket && setTicket(res.data.ticket);
+                }
+                setEditing(!editing);
+                setEditMessage(res.data.message);
+                setTimeout(() => {
+                    setEditMessage('');
+                }, 3500);
+                setTicket(initialTicket);
+                props.getTickets();
             })
             .catch((err) => {
                 console.log(err);
@@ -63,15 +68,17 @@ export default function Ticket(props) {
             .then((res) => {
                 // console.log(res);
                 setDelMessage(res.data.message);
+                setTimeout(() => {
+                    setDelMessage('');
+                }, 3500);
                 props.getTickets();
-                push('/');
             })
             .catch((err) => {
                 console.log(err);
             });
     };
     // console.log('ticket', ticket);
-    console.log('props  : ', props);
+    // console.log('props  : ', props);
 
     const [currentStatus, setCurrentStatus] = useState(1);
     const handleStatus = (e) => {
@@ -94,8 +101,8 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log('ticket', ticket);
-    console.log(status);
+    // console.log('ticket', ticket);
+    // console.log(status);
     return (
         <div className="row ticket">
             <div className="col">
@@ -176,7 +183,7 @@ export default function Ticket(props) {
                             </form>
                         ) : (
                             <>
-                                {' '}
+                                {editMessage}
                                 <h3>{subject}</h3>
                                 <p>{ticket_text}</p>
                             </>
