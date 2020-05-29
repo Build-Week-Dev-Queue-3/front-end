@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { authenticatedAxios } from '../../utils/authenticAxios';
 import { connect } from 'react-redux';
 import { fetchData } from '../../store/actions';
 
@@ -7,17 +6,11 @@ import Ticket from '../Ticket';
 
 const userId = localStorage.getItem('userId');
 
-// console.log(userId);
-
 const MyTickets = (props) => {
-    // console.log('props', props);
-
     useEffect(() => {
         props.fetchData(`tickets`);
     }, []);
 
-    console.log('myTickets', props.dataArray);
-    console.log(userId);
     {
         props.dataArray &&
             props.dataArray.data.map((value) => {
@@ -33,6 +26,7 @@ const MyTickets = (props) => {
                     <h2>My tickets: </h2>
                 </div>
             </div>
+            {!props.dataArray && <h2>Loading Please Wait...</h2>}
             {props.dataArray &&
                 props.dataArray.data.map((queue, key) => {
                     if (userId == queue.user_id) {

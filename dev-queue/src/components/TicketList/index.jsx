@@ -25,6 +25,7 @@ const TicketList = (props) => {
                     <h2>All tickets: </h2>
                 </div>
             </div>
+            {!tickets && <h2>Loading Please Wait...</h2>}
             {tickets &&
                 tickets.map((queue, key) => {
                     // console.log(queue);

@@ -124,7 +124,7 @@ export default function Ticket(props) {
                         <p>{name}</p>
                         <h5>Status:</h5>
                         <p className="ticket__status">{status}</p>
-                        {you.helper && (
+                        {you.helper && you.id !== user_id && (
                             <form>
                                 <label htmlFor={'status_id'}>
                                     Set Status:{' '}
