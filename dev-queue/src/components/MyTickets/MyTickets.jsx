@@ -10,17 +10,8 @@ const userId = localStorage.getItem('userId');
 // console.log(userId);
 
 const MyTickets = (props) => {
-    console.log('props', props);
-    // useEffect(() => {
-    //     authenticatedAxios()
-    //         .get(`tickets/users/${userId}`)
-    //         .then((res) => {
-    //             setMyTickets(res.data.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    // console.log('props', props);
+
     useEffect(() => {
         props.fetchData(`tickets`);
     }, []);
@@ -60,7 +51,7 @@ const MyTickets = (props) => {
     );
 };
 const mapStateToProps = (state) => {
-    console.log('DisplayedData mSTP: ', state);
+    console.log('MyTickets mSTP: ', state);
     return {
         isFetching: state.dataFetchReducer.isFetching,
         error: state.dataFetchReducer.error,
