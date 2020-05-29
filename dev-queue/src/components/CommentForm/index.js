@@ -1,28 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
-import axios from 'axios';
 
-import {
-    Form,
-    FormGroup,
-    Input,
-    Button,
-    UncontrolledAlert,
-} from 'reactstrap';
+import { Form, FormGroup, Input, Button, UncontrolledAlert } from 'reactstrap';
 import commentFormSchema from './commentFormSchema';
 import { authenticatedAxios } from '../../utils/authenticAxios';
 
 export default function CommentForm(props) {
     const { ticketId, loadTicket } = props;
 
-    const initialErrors = {comment: ''};
-    const initialFormData = {comment: ''};
+    const initialErrors = { comment: '' };
+    const initialFormData = { comment: '' };
 
     let [errors, setErrors] = useState(initialErrors);
     let [formData, setFormData] = useState(initialFormData);
     let [disabled, setDisabled] = useState(true);
-
-    
 
     function updateFormData(key, value) {
         setFormData({ ...formData, [key]: value });
@@ -86,11 +77,23 @@ export default function CommentForm(props) {
                     <Form autoComplete="off">
                         <h3>New Comment</h3>
                         <FormGroup>
-                            <Input type="textarea" name="comment" onChange={inputOnChangeHandler} value={formData.comment} rows="5" />
+                            <Input
+                                type="textarea"
+                                name="comment"
+                                onChange={inputOnChangeHandler}
+                                value={formData.comment}
+                                rows="5"
+                            />
                         </FormGroup>
-                        
+
                         <FormGroup>
-                            <Button disabled={disabled} onClick={onSubmitHandler} className="btn btn-danger">Post</Button>
+                            <Button
+                                disabled={disabled}
+                                onClick={onSubmitHandler}
+                                className="btn btn-danger"
+                            >
+                                Post
+                            </Button>
                         </FormGroup>
                     </Form>
                 </div>

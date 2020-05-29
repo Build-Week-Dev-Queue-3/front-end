@@ -92,6 +92,7 @@ const MyProfile = (props) => {
                     <label>
                         Password:{' '}
                         <input
+                            required
                             name="password"
                             type="password"
                             value={profile.password}

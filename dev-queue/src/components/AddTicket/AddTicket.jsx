@@ -21,12 +21,11 @@ const AddTicket = (props) => {
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
     const [disabled, setDisabled] = useState(true);
-    
+
     const { push } = useHistory();
 
-
     function updateFormData(key, value) {
-        setFormData({ ...formData, [key]: value});
+        setFormData({ ...formData, [key]: value });
     }
 
     function inputOnChangeHandler(event) {
@@ -71,7 +70,6 @@ const AddTicket = (props) => {
 
     return (
         <div className="container">
-
             {Object.keys(errors).map((item, key) => {
                 if (errors[item]) {
                     return (
@@ -97,17 +95,31 @@ const AddTicket = (props) => {
                     <Form autoComplete="off">
                         <FormGroup>
                             <Label>Subject:</Label>
-                            <Input type="text" name="subject" onChange={inputOnChangeHandler} />
+                            <Input
+                                type="text"
+                                name="subject"
+                                onChange={inputOnChangeHandler}
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>Please describe the issue:</Label>
-                            <Input type="textarea" name="ticket_text" onChange={inputOnChangeHandler} rows="10" />
+                            <Input
+                                type="textarea"
+                                name="ticket_text"
+                                onChange={inputOnChangeHandler}
+                                rows="10"
+                            />
                         </FormGroup>
                         <FormGroup>
-                            <Button className="btn btn-danger" disabled={disabled} onClick={onSubmitHandler}>Done</Button>
+                            <Button
+                                className="btn btn-danger"
+                                disabled={disabled}
+                                onClick={onSubmitHandler}
+                            >
+                                Done
+                            </Button>
                         </FormGroup>
                     </Form>
-
                 </div>
             </div>
         </div>

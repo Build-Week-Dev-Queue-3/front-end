@@ -5,6 +5,7 @@ export const authenticatedAxios = () => {
     return axios.create({
         headers: {
             Authorization: token,
+            'Access-Control-Allow-Origin': '*',
         },
         baseURL: 'https://bwdevdesk3.herokuapp.com',
     });

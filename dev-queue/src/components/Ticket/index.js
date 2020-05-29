@@ -15,21 +15,17 @@ export default function Ticket(props) {
     const [editing, setEditing] = useState(false);
     const [ticket, setTicket] = useState(initialTicket);
     const [delMessage, setDelMessage] = useState('');
+    const [editMessage, setEditMessage] = useState('');
+
     const edit = (e) => {
-        e.preventDefault();
+        {
+            !editing && e.preventDefault();
+        }
         setEditing(!editing);
-        authenticatedAxios()
-            .get('users')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     };
 
     // console.log(editing);
-    // console.log(props.queue);
+    console.log(props);
     const handleChanges = (e) => {
         e.persist();
         setTicket({
@@ -40,13 +36,23 @@ export default function Ticket(props) {
     };
 
     const handleEdit = (e) => {
-        setEditing(!editing);
         e.preventDefault();
+        setEditing(!editing);
+        props.getTickets();
         authenticatedAxios()
             .put(`tickets/${id}/user/${you.id}`, ticket)
             .then((res) => {
                 console.log(res);
-                edit();
+                {
+                    res.data.ticket && setTicket(res.data.ticket);
+                }
+                setEditing(!editing);
+                setEditMessage(res.data.message);
+                setTimeout(() => {
+                    setEditMessage('');
+                }, 3500);
+                setTicket(initialTicket);
+                props.getTickets();
             })
             .catch((err) => {
                 console.log(err);
@@ -62,14 +68,17 @@ export default function Ticket(props) {
             .then((res) => {
                 // console.log(res);
                 setDelMessage(res.data.message);
+                setTimeout(() => {
+                    setDelMessage('');
+                }, 3500);
                 props.getTickets();
-                push('/');
             })
             .catch((err) => {
                 console.log(err);
             });
     };
     // console.log('ticket', ticket);
+    // console.log('props  : ', props);
 
     const [currentStatus, setCurrentStatus] = useState(1);
     const handleStatus = (e) => {
@@ -79,7 +88,7 @@ export default function Ticket(props) {
             [e.target.name]: e.target.value,
         });
     };
-    const changeStatus = (e) => {
+    const submitStatusChange = (e) => {
         e.preventDefault();
         authenticatedAxios()
             .patch(`/tickets/${id}`, currentStatus)
@@ -92,22 +101,27 @@ export default function Ticket(props) {
                 console.log(err);
             });
     };
-    console.log('status yoooo', status);
+    // console.log('ticket', ticket);
+    // console.log(status);
     return (
         <div className="row ticket">
             <div className="col">
                 <h2>{delMessage} </h2>
                 <div
                     className={
-                        status === 'sumbitted'
-                            ? 'sumbitted'
-                            : 'row ticket__container submitted'
+                        (status === 'submitted' &&
+                            'row submitted ticket__container') ||
+                        (status === 'in progress' &&
+                            'row inProgress ticket__container') ||
+                        (status === 'complete' &&
+                            'row completed ticket__container') ||
+                        (status === 'returned to queue' &&
+                            'row returnedToQueue ticket__container')
                     }
                 >
                     <div className="col-lg-3 ticket__info">
                         <h5>Author:</h5>
                         <p>{name}</p>
-
                         <h5>Status:</h5>
                         <p className="ticket__status">{status}</p>
                         {you.helper && (
@@ -127,9 +141,23 @@ export default function Ticket(props) {
                                         <option value={4}>Completed</option>
                                     </select>
                                 </label>
-                                <button onClick={changeStatus}>Submit</button>
+                                <button onClick={submitStatusChange}>
+                                    Submit
+                                </button>
                             </form>
                         )}
+                        {id && (
+                            <div className="ticket__actions">
+                                <a
+                                    href=""
+                                    onClick={() => {
+                                        push(`/tickets/${id}`);
+                                    }}
+                                >
+                                    View more info
+                                </a>
+                            </div>
+                        )}{' '}
                     </div>
                     <div className="col ticket__content">
                         {editing ? (
@@ -155,7 +183,7 @@ export default function Ticket(props) {
                             </form>
                         ) : (
                             <>
-                                {' '}
+                                {editMessage}
                                 <h3>{subject}</h3>
                                 <p>{ticket_text}</p>
                             </>

@@ -26,7 +26,6 @@ export default function LoginForm(props) {
     };
 
     const LOGIN_URL = 'https://bwdevdesk3.herokuapp.com/auth/login';
-    const token = localStorage.getItem('token');
 
     const { push } = useHistory();
 

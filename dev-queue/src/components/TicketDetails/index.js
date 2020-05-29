@@ -3,25 +3,19 @@ import ticketDetailsSchema from './ticketDetailsSchema';
 import Ticket from '../Ticket';
 import { useParams } from 'react-router-dom';
 import { authenticatedAxios } from '../../utils/authenticAxios';
-import CommentForm from '../CommentForm'
-import Comment from '../Comment'
+import CommentForm from '../CommentForm';
+import Comment from '../Comment';
 import './TicketDetails.css';
 
-import {
-    Form,
-    FormGroup,
-    Input,
-    Button,
-    UncontrolledAlert,
-} from 'reactstrap';
+import { Form, FormGroup, Input, Button, UncontrolledAlert } from 'reactstrap';
 
-export default function TicketDetails (props) {
+export default function TicketDetails(props) {
     const params = useParams();
     const ticketId = params.id;
 
     const [currentTicket, setCurrentTicket] = useState();
 
-    function loadTicket () {
+    function loadTicket() {
         authenticatedAxios()
             .get(`tickets/${ticketId}`)
             .then((res) => {
@@ -36,21 +30,29 @@ export default function TicketDetails (props) {
         loadTicket();
     }, []);
 
-
     return (
         <div className="container">
-            {currentTicket &&
-                <Ticket queue={currentTicket} />
-            }
+            {!currentTicket && <h2>Loading please wait....</h2>}
+            {currentTicket && (
+                <Ticket queue={currentTicket} getTickets={loadTicket} />
+            )}
             <div className="comments">
                 <div className="row">
                     <div className="col">
                         <h2>Comments</h2>
                     </div>
                 </div>
-                {currentTicket && currentTicket.comments.map((commentData, key) => {
-                    return <Comment commentData={commentData} ticket={currentTicket} loadTicket={loadTicket} key="key" />
-                })}
+                {currentTicket &&
+                    currentTicket.comments.map((commentData, key) => {
+                        return (
+                            <Comment
+                                commentData={commentData}
+                                ticket={currentTicket}
+                                loadTicket={loadTicket}
+                                key="key"
+                            />
+                        );
+                    })}
             </div>
 
             <CommentForm ticketId={ticketId} loadTicket={loadTicket} />
