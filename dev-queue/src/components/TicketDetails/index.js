@@ -32,6 +32,7 @@ export default function TicketDetails(props) {
 
     return (
         <div className="container">
+            {!currentTicket && <h2>Loading please wait....</h2>}
             {currentTicket && (
                 <Ticket queue={currentTicket} getTickets={loadTicket} />
             )}
