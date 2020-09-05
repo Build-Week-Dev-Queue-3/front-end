@@ -1,0 +1,63 @@
+.ticket .ticket__container.submitted {
+    border-left: 10px solid #007aff;
+}
+.ticket .ticket__container.inProgress {
+    border-left: 10px solid rgb(255, 238, 0);
+}
+.ticket .ticket__container.returnedToQueue {
+    border-left: 10px solid #ff6332;
+}
+.ticket .ticket__container.completed {
+    border-left: 10px solid #48c77b;
+}
+.ticket:hover {
+    box-shadow: 6px 1px rgb(133, 133, 133);
+}
+.ticket:last-child {
+    margin-bottom: 60px;
+}
+/* .ticket:nth-child(3n + 3) .ticket__container {
+    border-color: #ff6332;
+}
+
+.ticket:nth-child(3n + 2) .ticket__container {
+    border-color: #007aff;
+} */
+
+.ticket__container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.ticket__info {
+    border-right: 1px solid #e0e0e0;
+}
+
+div.ticket__content {
+    padding-left: 30px;
+}
+
+.ticket__status {
+    text-transform: capitalize;
+}
+
+.ticket__actions {
+    display: flex;
+}
+
+.ticket__actions a {
+    margin-right: 15px;
+}
+
+@media (max-width: 992px) {
+    .ticket__info {
+        border: 0;
+        padding: 0;
+    }
+
+    div.ticket__content {
+        padding-left: 0;
+    }
+}

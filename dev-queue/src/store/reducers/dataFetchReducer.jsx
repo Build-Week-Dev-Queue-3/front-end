@@ -4,7 +4,7 @@ import {
     FETCH_DATA_FAILURE,
 } from '../actions';
 
-export const initialState = {
+const initialState = {
     isFetching: false,
     error: '',
     dataArray: '',
