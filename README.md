@@ -1,4 +1,4 @@
-# front-end of Dev Desk Queue
+# Front-End of Dev Desk Queue
 
 Link to React Site: https://github.com/Build-Week-Dev-Queue-3/front-end
 
