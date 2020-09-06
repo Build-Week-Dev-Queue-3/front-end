@@ -14,20 +14,14 @@ export default function Header(props) {
     push("/");
   };
   console.log(window.location.href);
-  if (
-    window.location.href == "http://localhost:3000/login" ||
-    "https://dev-queue.perezented.now.sh/login"
-  ) {
-    localStorage.removeItem("token");
-  }
-  window.onclose = closingCode;
+
   if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
   } else {
     localStorage.removeItem("token");
+    localStorage.removeItem("you");
+    localStorage.removeItem("userId");
   }
-  function closingCode() {
-    return null;
-  }
+
   return (
     <header className="header">
       <div className="container">
@@ -39,7 +33,8 @@ export default function Header(props) {
           </div>
           <div className="col-lg-10">
             <nav className="header__nav">
-              {!props.loggedIn ? (
+              {console.log(localStorage.getItem("token"))}
+              {localStorage.getItem("token") == null ? (
                 <Link
                   className="header__nav-link header__nav-link--right"
                   to="/login"
