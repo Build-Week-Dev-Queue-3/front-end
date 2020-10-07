@@ -1,4 +1,4 @@
-# front-end of Dev Desk Queue
+# Front-End of Dev Desk Queue
 
 DevDesk Queue is an online web application that focused on assisting students reach their schools' help desk. This is a react.js project that connects to a back end api to house all the students and helpers accounts, as well as the tickets that have been submited. The program was a cross function collaboration between 4 web developers, 1 landing page developer, 2 react developers, and a backend developer.
 
